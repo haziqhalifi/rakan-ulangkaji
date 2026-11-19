@@ -562,48 +562,48 @@ Wed 2 Dec and Thu 3 Dec are buffer for overruns and the manual checklist on a re
   - [x] 9.10 Checkpoint - Ensure all tests pass
     - Run `npm run lint`, `npm test`, and `npm run build`. Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 10. Submission: docs, deploy guide, Devpost checklist, final gates (~1 evening)
-  - [ ] 10.1 Write the English README
+- [x] 10. Submission: docs, deploy guide, Devpost checklist, final gates (~1 evening)
+  - [x] 10.1 Write the English README
     - Create `README.md` explaining the project, the three stitched parts and the shared profile, how to run it with `npm run dev`, `build`, `lint`, and `test`, the privacy approach (browser-only data, opt-in remote AI, no analytics), and that the full demo works offline with no API key
     - Include the pathway guidance-only note and no claim of official eligibility or endorsement
     - Use no em dashes
     - _Requirements: 18.9, 5.11, 13.1, 15.11_
 
-  - [ ] 10.2 Write the English demo script
+  - [x] 10.2 Write the English demo script
     - Create `docs/demo-script.md` listing each step in order with a target time per step and a total of no more than 180 seconds: onboarding, a Rakan quiz answer, the Paper with the 60 second demo timer, results, the updated Rakan nudge, the board with imported grade, hints, and the Disclaimer
     - Add a pre-demo setup note (first online visit to cache exam and board, then go offline, enable the demo timer)
     - _Requirements: 20.3, 20.4, 20.5, 20.6, 15.4_
 
-  - [ ] 10.3 Write the Kiro usage write-up
+  - [x] 10.3 Write the Kiro usage write-up
     - Create `docs/kiro-usage.md` describing how Kiro was used: specs (requirements, design, tasks), steering files (tech, product, content-integrity), hooks if any, and how property-based tests came from the design correctness properties
     - Read `.kiro/` first so the write-up matches what exists in the repository
     - _Requirements: 20.6_
 
-  - [ ] 10.4 Write the Cloudflare Pages deploy guide
+  - [x] 10.4 Write the Cloudflare Pages deploy guide
     - Create `docs/deploy-cloudflare-pages.md` for the human to follow: build command `npm run build`, output directory `dist`, optional Workers AI binding named `AI` for `functions/api/chat.ts`, and a post-deploy smoke check
     - State that the deploy is run by the human and that no code or task pushes, deploys, or creates remotes
     - _Requirements: 18.3, 18.4, 18.5_
 
-  - [ ] 10.5 Write the Devpost submission checklist
+  - [x] 10.5 Write the Devpost submission checklist
     - Create `docs/devpost-checklist.md` for the human: Frankenstein category, English project text, demo video of 3 minutes or less following the demo script, public repo link, live URL, screenshots of the three modes, the Kiro usage write-up link, and the submission deadline of Friday 4 December 2026
     - Note that the human performs the submission
     - _Requirements: 20.7, 20.6_
 
-  - [ ] 10.6 Write the manual test checklist
+  - [x] 10.6 Write the manual test checklist
     - Create `docs/manual-checklist.md` from the design Manual checklist: install as PWA and run the demo offline, first-visit lazy-content behaviour, new build during an exam, screen reader smoke test, 360 x 640 Disclaimer visibility, reduced motion, and a timed run of the demo script
     - _Requirements: 13.4, 15.3, 15.4, 15.5, 15.9, 15.11, 16.7, 16.8, 16.9, 20.3, 20.6_
 
-  - [ ]* 10.7 Write the public copy scan test
+  - [x]* 10.7 Write the public copy scan test
     - Scan i18n strings, `content/`, `README.md`, and `docs/` for the em dash character, the word "kau", and the forbidden phrases ("you are eligible", "you will get in", and BM equivalents)
     - _Requirements: 12.7, 14.10, 14.11_
 
-  - [ ] 10.8 Run the final gates and fix failures
+  - [x] 10.8 Run the final gates and fix failures
     - Run `npm run lint`, `npm test` (once, not watch), and `npm run build` (including the size gate) and fix any failure
     - Confirm the demo script exists in `docs/` and the three commands exit with code 0
     - Do not deploy, push, or create remotes
     - _Requirements: 18.1, 18.7, 18.8, 20.7, 19.1_
 
-  - [ ] 10.9 Final checkpoint - Ensure all tests pass
+  - [x] 10.9 Final checkpoint - Ensure all tests pass
     - Ensure all tests pass, ask the user if questions arise.
 
 ## Notes

@@ -71,3 +71,9 @@ Copy this block under a new date heading (for example `## Sun 22 Nov 2026`).
 | Kiro feature | Prompt summary | Outcome | Files touched |
 |---|---|---|---|
 | Spec task execution (task 9) | Add the web manifest and icons, a hand-written service worker with a precache manifest plugin, offline notice, bundle size gate, seam wipe, and an accessibility pass | Build, lint, tests and copy-guard pass. Initial JS is about 99 KB gzip against the 200 KB limit, and exam and board stay in lazy chunks. The optional tests 9.7, 9.8 and 9.9 were small, so they were done. The ember colour token was darkened to pass the 4.5:1 contrast test | `public/manifest.webmanifest`, `public/sw.js`, `public/icons/*`, `scripts/make-icons.mjs`, `scripts/precache-plugin.mjs`, `scripts/check-size.mjs`, `src/app/registerSW.ts`, `src/app/OfflineNotice.tsx`, `src/app/UpdateNotice.tsx`, `src/styles/*.css`, `src/core/i18n/strings.*.ts` |
+
+## Thu 19 Nov 2026 (task 10)
+
+| Kiro feature | Prompt summary | Outcome | Files touched |
+|---|---|---|---|
+| Spec task execution (task 10) | Write the README, demo script, Kiro usage write-up, deploy guide, Devpost checklist and manual checklist, add a public copy scan test, and run the final gates | Docs added, optional test 10.7 done because it was small. Build, lint, tests and copy-guard pass | `README.md`, `docs/demo-script.md`, `docs/kiro-usage.md`, `docs/deploy-cloudflare-pages.md`, `docs/devpost-checklist.md`, `docs/manual-checklist.md`, `src/test/publicCopy.test.ts` |

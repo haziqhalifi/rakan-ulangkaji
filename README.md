@@ -12,6 +12,22 @@ Exam results update your profile, which changes what Rakan says and what the boa
 
 Built for the **Frankenstein** category of Kiroween 2026: three normally separate experiences stitched into one app.
 
+## Shared profile
+
+One student profile and progress record, stored in the browser, feeds all three parts. A finished exam attempt saves a Matematik grade and weak topics. Rakan then nudges you about a weak topic, and the board can import that grade to show updated hints. The parts are not separate pages with separate data.
+
+## Works offline, no key needed
+
+The full demo runs with no network and no API key. Rakan replies with a deterministic built-in rules provider by default. After the first online visit caches the app, you can install it as a PWA and use it offline.
+
+## Privacy
+
+- Profile, grades, progress and chat history stay in your browser storage. There is no backend database.
+- No analytics, trackers or third-party fonts and scripts.
+- Remote AI is opt-in and off by default. Before the first remote call the app tells you in plain words what will be sent. Only the current question and minimal context are sent. Your own API key stays in this browser and goes only to the provider you chose.
+- Settings has "export my data" and "delete my data" actions.
+- Marking and pathway hints are always rule-based. AI never decides them.
+
 ## Tech stack
 
 - Vite, React, TypeScript (strict)
@@ -23,7 +39,7 @@ Built for the **Frankenstein** category of Kiroween 2026: three normally separat
 
 ## Zero-cost hosting
 
-Static site on the Cloudflare Pages free tier. Build command `npm run build`, output directory `dist`. No paid services.
+Static site on the Cloudflare Pages free tier. Build command `npm run build`, output directory `dist`. No paid services. See [`docs/deploy-cloudflare-pages.md`](docs/deploy-cloudflare-pages.md).
 
 ## How Kiro was used
 
@@ -32,6 +48,7 @@ Kiro drove the planning and build. See:
 - [`.kiro/steering/`](.kiro/steering/) for product, tech, content and tone rules
 - [`.kiro/specs/rakan-ulangkaji-mvp/`](.kiro/specs/rakan-ulangkaji-mvp/) for requirements, design and tasks
 - [`.kiro/hooks/`](.kiro/hooks/) for lint, test, copy-check and spec-sync hooks
+- [`docs/kiro-usage.md`](docs/kiro-usage.md) for the write-up of how Kiro was used
 - [`docs/kiro-usage-log.md`](docs/kiro-usage-log.md) for a dated log of Kiro features used
 
 ## Local development
@@ -39,12 +56,18 @@ Kiro drove the planning and build. See:
 ```bash
 npm install
 npm run dev          # start Vite
-npm run build        # typecheck and build to dist/
+npm run build        # typecheck, build to dist/, check bundle size
 npm run preview      # serve the built site
 npm test             # run Vitest once
 npm run lint         # ESLint
 npm run copy:check   # check copy for em dashes and banned words
 ```
+
+## More docs
+
+- [`docs/demo-script.md`](docs/demo-script.md): the 3 minute demo
+- [`docs/manual-checklist.md`](docs/manual-checklist.md): checks that tests cannot cover
+- [`docs/devpost-checklist.md`](docs/devpost-checklist.md): submission steps
 
 ## Links
 
