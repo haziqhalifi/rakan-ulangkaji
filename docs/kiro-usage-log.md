@@ -16,25 +16,18 @@ A dated record of how Kiro was used on Rakan Ulangkaji.
 
 Exact prompts used for each run are saved in `kiro-prompts/` (kept outside docs/ because they quote the banned word as a rule).
 
-## Sun 22 Nov 2026
+## Thu 19 Nov 2026 (task 1)
 
 | Kiro feature | Prompt summary | Outcome | Files touched |
 |---|---|---|---|
 | Spec task execution (task 1) | Build foundations: shared types, design tokens, i18n, Storage_Service, ProfileStore with weak topics, Shell with hash router and lazy routes, ESLint boundaries, and tests for tasks 1.7 to 1.12 | Build, lint and tests pass. A copy-guard hit on the banned-word regex in a test was fixed by building the pattern from letters | `src/core/*`, `src/app/*`, `src/features/*/` placeholders, `src/styles/*`, `src/test/*`, `eslint.config.js`, `vite.config.ts`, `package.json` |
 
-## Mon 23 Nov 2026
+## Thu 19 Nov 2026 (task 2)
 
 | Kiro feature | Prompt summary | Outcome | Files touched |
 |---|---|---|---|
 | Spec task execution (task 2) | Build onboarding in four screens, profile validation, settings, export, import and delete, plus property and component tests (tasks 2.1 to 2.7, including the optional 2.2 and 2.6) | Build, lint, tests and copy-guard pass | `src/app/Onboarding.tsx`, `src/app/SettingsScreen.tsx`, `src/app/ProfileFields.tsx`, `src/core/profile/*`, `src/core/storage/exportImport.ts`, `src/core/i18n/*`, tests |
 
-## Template for future entries
-
-Copy this block under a new date heading (for example `## Sun 22 Nov 2026`).
-
-| Kiro feature | Prompt summary | Outcome | Files touched |
-|---|---|---|---|
-| (steering, spec, hook, chat, and so on) | (one or two sentences) | (what worked, what needed a fix) | (paths) |
 ## Thu 19 Nov 2026 (task 3)
 
 | Kiro feature | Prompt summary | Outcome | Files touched |
@@ -77,3 +70,13 @@ Copy this block under a new date heading (for example `## Sun 22 Nov 2026`).
 | Kiro feature | Prompt summary | Outcome | Files touched |
 |---|---|---|---|
 | Spec task execution (task 10) | Write the README, demo script, Kiro usage write-up, deploy guide, Devpost checklist and manual checklist, add a public copy scan test, and run the final gates | Docs added, optional test 10.7 done because it was small. Build, lint, tests and copy-guard pass | `README.md`, `docs/demo-script.md`, `docs/kiro-usage.md`, `docs/deploy-cloudflare-pages.md`, `docs/devpost-checklist.md`, `docs/manual-checklist.md`, `src/test/publicCopy.test.ts` |
+
+## Template for future entries
+
+Copy this block under a new date heading (for example `## Fri 20 Nov 2026`).
+
+| Kiro feature | Prompt summary | Outcome | Files touched |
+|---|---|---|---|
+| (steering, spec, hook, chat, and so on) | (one or two sentences) | (what worked, what needed a fix) | (paths) |
+
+Note: tasks 1 to 10 were all executed by Kiro CLI on Thu 19 Nov 2026 (about 18:00 to 19:00 MYT), one headless `kiro-cli chat --v3` run per task, driven by a small shell loop that verified build, lint and tests and committed after each task. Kiroween credits used for the whole build: about 106 of 4,000.
