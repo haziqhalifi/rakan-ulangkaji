@@ -25,8 +25,8 @@ Wed 2 Dec and Thu 3 Dec are buffer for overruns and the manual checklist on a re
 
 ## Tasks
 
-- [ ] 1. Foundations: scaffold, tokens, i18n, storage, ProfileStore, Shell (~1 evening)
-  - [ ] 1.1 Scaffold the project and quality gates
+- [x] 1. Foundations: scaffold, tokens, i18n, storage, ProfileStore, Shell (~1 evening)
+  - [x] 1.1 Scaffold the project and quality gates
     - Create the Vite + React + TypeScript (strict) project with the folder layout from design.md (`src/app`, `src/features/{chat,exam,pathways}`, `src/core/{profile,storage,ai,i18n}`, `src/content`, `src/styles`, `functions/`, `public/`, `docs/`)
     - Add npm scripts `dev`, `build` (`tsc --noEmit` then `vite build`), `lint`, and `test` (`vitest --run`)
     - Add only free, project-local dev dependencies: Vitest, fast-check, React Testing Library, jsdom, fake-indexeddb, ESLint with `@typescript-eslint`
@@ -36,68 +36,68 @@ Wed 2 Dec and Thu 3 Dec are buffer for overruns and the manual checklist on a re
     - Use fictional students only ("Aina", "Daniel", "Mei Ling", "Ravi") in all fixtures
     - _Requirements: 18.1, 18.4, 18.6, 18.7, 2.1, 5.10, 10.15, 12.5, 19.2, 19.3_
 
-  - [ ] 1.2 Create the design tokens and base styles
+  - [x] 1.2 Create the design tokens and base styles
     - Write `tokens.css`, `base.css`, and `stitch.css` with the palette and the `.stitched` seam motif from design.md
     - Add `:focus-visible` outline (3 px), the `.tap` 44 px utility, system font stacks only, and `prefers-reduced-motion` rules
     - No webfonts, no remote assets
     - _Requirements: 16.4, 16.5, 16.9, 17.1, 17.8, 17.9, 17.10, 5.11_
 
-  - [ ] 1.3 Implement the i18n module
+  - [x] 1.3 Implement the i18n module
     - Create `strings.en.ts` and `strings.bm.ts` (BM typed as `Record<StringKey, string>`), `t()` with fallback to the other language, `pick()` for bilingual content, `detectDefaultLanguage()`, and `I18nProvider`
     - Keep SPM, STPM, UPU, TVET, KSSM as literal text in both files
     - Use "awak" or "korang" in BM copy, never "kau", and never use an em dash
     - Add the Disclaimer text in both languages
     - _Requirements: 14.5, 14.7, 14.8, 14.10, 14.11, 14.12, 13.6_
 
-  - [ ] 1.4 Implement the Storage_Service
+  - [x] 1.4 Implement the Storage_Service
     - Create `idb.ts`, `localStore.ts`, a memory backend, `StorageService.ts`, `migrations.ts` (empty chain plus the hook), and `LoadOutcome` handling (`empty`, `ok`, `unreadable`)
     - Store one versioned JSON document under key `data` and the API key under a separate `secret:` key
     - Backend order: IndexedDB, then localStorage with prefix `rakan:`, then memory
     - Never write back when data is newer or a migration throws
     - _Requirements: 2.6, 2.7, 2.8, 2.9, 5.7_
 
-  - [ ] 1.5 Implement the ProfileStore and weak-topic derivation
+  - [x] 1.5 Implement the ProfileStore and weak-topic derivation
     - Create `ProfileStore.ts` with `getState`, `subscribe` (`useSyncExternalStore` compatible), `setLanguage`, `appendChat` (cap 200), `recordQuizAttempt`, `addExamResult`, `saveExamInProgress`, `setGrade`, `importMathGradeFromLatestExam`, and settings and consent mutators
     - Create `weakTopics.ts` with `isWeak` and `computeWeakTopics`, deriving topic mastery from the Progress_Record (not persisted)
     - Notify listeners synchronously, debounce writes (about 250 ms, immediate for exam saves), set `storageStatus` on write failure and retry on the next mutation
     - Cap `quizAttempts` at 500 and `examResults` at 20
     - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.5, 2.9, 2.11, 3.11, 3.12, 11.7, 14.6_
 
-  - [ ] 1.6 Build the Shell, router, and language toggle
+  - [x] 1.6 Build the Shell, router, and language toggle
     - Create the hash router, route guard (no profile redirects to `#/welcome`), bottom navigation with `aria-current="page"`, home screen caption, and placeholder screens for each route
     - Add `LanguageToggle` on every screen (44 px target) and set `document.documentElement.lang` (`ms` or `en`) on load and on change
     - Add `StatusBanner` with `useStatus()`, an error boundary with a kind message, and a `navigate()` context so features never import each other
     - Lazy-load `#/exam` and `#/board` with `React.lazy`
     - _Requirements: 1.1, 14.1, 14.2, 14.6, 16.11, 16.12, 17.5, 17.11, 2.8, 2.9, 3.10_
 
-  - [ ] 1.7 Write property test for persistence round trip
+  - [x] 1.7 Write property test for persistence round trip
     - **Property 10: Persistence and export round trip (persistence half)**
     - Use `fake-indexeddb` and an `arbPersistedData` generator
     - **Validates: Requirements 2.6, 2.10**
     - _Requirements: 2.6, 2.10, 19.1_
 
-  - [ ] 1.8 Write property test for migration order
+  - [x] 1.8 Write property test for migration order
     - **Property 12: Migrations run once each, in ascending order**
     - Use a fake migration chain from v0 upward
     - **Validates: Requirements 2.7**
     - _Requirements: 2.7, 19.1_
 
-  - [ ] 1.9 Write property test for unreadable data
+  - [x] 1.9 Write property test for unreadable data
     - **Property 13: Unreadable data is left unchanged**
     - Cover newer version, throwing migration, and corrupt JSON
     - **Validates: Requirements 2.8**
     - _Requirements: 2.8, 19.1_
 
-  - [ ] 1.10 Write example tests for the storage wrapper
+  - [x] 1.10 Write example tests for the storage wrapper
     - Cover the IndexedDB path, localStorage fallback when IndexedDB open fails, memory fallback, schema version stored, and clear-all
     - _Requirements: 2.6, 2.9, 19.1_
 
-  - [ ]* 1.11 Write property test for i18n fallback
+  - [x]* 1.11 Write property test for i18n fallback
     - **Property 38: i18n fallback never returns empty or a raw key**
     - **Validates: Requirements 13.6, 14.8**
     - _Requirements: 13.6, 14.8, 14.9_
 
-  - [ ]* 1.12 Write property test for default language detection
+  - [x]* 1.12 Write property test for default language detection
     - **Property 39: Default language detection**
     - **Validates: Requirements 14.7**
     - _Requirements: 14.7_

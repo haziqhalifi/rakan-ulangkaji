@@ -1,0 +1,51 @@
+/* The stitched seam motif: dashed border, inset dashed line, corner patches.
+   Pure CSS, no images. Apply .stitched to top-level panels. */
+.stitched {
+  position: relative;
+  border: 2px dashed var(--stitch);
+  outline: 1px dashed var(--stitch);
+  outline-offset: -8px;
+  border-radius: var(--radius);
+  padding: var(--space-4);
+  background: var(--surface);
+}
+
+.stitched::before,
+.stitched::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: var(--stitch);
+  border-radius: 2px;
+}
+
+.stitched::before {
+  top: -6px;
+  left: -6px;
+}
+
+.stitched::after {
+  right: -6px;
+  bottom: -6px;
+}
+
+/* Seam wipe between modes. CSS only, 300 ms, never delays navigation. */
+@keyframes seam-wipe {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+.seam-wipe {
+  animation: seam-wipe 300ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .seam-wipe {
+    animation: none;
+  }
+}

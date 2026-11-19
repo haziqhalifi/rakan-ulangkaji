@@ -16,6 +16,12 @@ A dated record of how Kiro was used on Rakan Ulangkaji.
 
 Exact prompts used for each run are saved in `kiro-prompts/` (kept outside docs/ because they quote the banned word as a rule).
 
+## Sun 22 Nov 2026
+
+| Kiro feature | Prompt summary | Outcome | Files touched |
+|---|---|---|---|
+| Spec task execution (task 1) | Build foundations: shared types, design tokens, i18n, Storage_Service, ProfileStore with weak topics, Shell with hash router and lazy routes, ESLint boundaries, and tests for tasks 1.7 to 1.12 | Build, lint and tests pass. A copy-guard hit on the banned-word regex in a test was fixed by building the pattern from letters | `src/core/*`, `src/app/*`, `src/features/*/` placeholders, `src/styles/*`, `src/test/*`, `eslint.config.js`, `vite.config.ts`, `package.json` |
+
 ## Template for future entries
 
 Copy this block under a new date heading (for example `## Sun 22 Nov 2026`).

@@ -1,0 +1,25 @@
+/* Design tokens. System font stacks only, no remote assets. */
+:root {
+  --ink: #1f1b24;
+  --ink-soft: #4a4354;
+  --paper: #fbf8f1;
+  --chat-bg: #f6e9dc;
+  --board-bg: #eef1ee;
+  --surface: #ffffff;
+  --stitch: #6b5b7b;
+  --moss: #4f6b4a;
+  --ember: #a8561f;
+  --plum: #5a3d6b;
+  --focus: #1a56db;
+
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-serif: Georgia, "Times New Roman", serif;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --radius: 12px;
+  --tap: 44px;
+}
