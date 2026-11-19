@@ -275,58 +275,58 @@ Wed 2 Dec and Thu 3 Dec are buffer for overruns and the manual checklist on a re
   - [x] 4.15 Checkpoint - Ensure all tests pass
     - Run `npm run lint`, `npm test`, and `npm run build`. Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 5. Rakan chat UI, intent engine, and rules provider (~1 evening)
-  - [ ] 5.1 Create the AI core interface and rules provider
+- [x] 5. Rakan chat UI, intent engine, and rules provider (~1 evening)
+  - [x] 5.1 Create the AI core interface and rules provider
     - Create `core/ai/types.ts` (ProviderId, `Intent` union, ReplyRequest, Reply, AIProvider; `Intent` lives here so `core` never imports a feature), `rulesProvider.ts` (returns the precomputed rule reply), and `generateReply.ts` with the rules provider as the default and an injectable `deps` parameter
     - _Requirements: 4.6, 4.7, 4.13_
 
-  - [ ] 5.2 Implement the intent engine and chat input validator
+  - [x] 5.2 Implement the intent engine and chat input validator
     - Create `features/chat/intents.ts` with `classifyIntent` over a BM and EN keyword table, fixed priority order, and `unknown` for empty or whitespace input
     - Create `features/chat/input.ts` with the 1 to 500 character validator (trim, block above 500, keep typed text)
     - _Requirements: 4.1, 4.2, 3.3, 3.4, 3.5_
 
-  - [ ] 5.3 Write original topic explanations
+  - [x] 5.3 Write original topic explanations
     - Create `content/topicExplanations.ts` with BM and EN explanations of 100 words or fewer for each topic in the question bank, original wording, fictional examples
     - _Requirements: 4.5_
 
-  - [ ] 5.4 Implement reply templates
+  - [x] 5.4 Implement reply templates
     - Create `features/chat/replies.ts` with `ruleReply(intent, ctx)` using fixed templates chosen by `hash(message) % variants.length` (no `Math.random`, no `Date.now`)
     - Cover greeting (with the student's name), quiz_request, revise_advice, exam_request, pathway_request (full Disclaimer or a board link), topic_help (explanation plus quiz offer), language_switch (side-effect descriptor), data_help, and unknown (lists the seven capabilities)
     - Use "awak" or "korang" in BM
     - _Requirements: 3.2, 3.14, 4.3, 4.4, 4.5, 4.12, 13.2_
 
-  - [ ] 5.5 Build the Rakan chat screen
+  - [x] 5.5 Build the Rakan chat screen
     - Create `ChatScreen` and `chat.css` (rounded bubbles, warm background) with a `role="log"` `aria-live="polite"` thread, alignment plus a "Rakan" or "Awak"/"You" label, the typing indicator (`role="status"`, removed in `finally`), the input with a character limit notice and focus kept on empty send, and the four quick-reply chips
     - "Quiz me" and "What should I revise?" append the chip text as a student message. "Start exam" and "See my pathways" call `navigate()`
     - Persist each message through the store, restore up to 200 on reload, keep messages in the language they were sent, and keep the input enabled at all times
     - Show the progress-may-not-be-saved banner on persistence failure
     - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9, 3.10, 3.11, 3.12, 3.13, 14.4, 16.7, 17.2_
 
-  - [ ]* 5.6 Write property test for intent classification
+  - [x]* 5.6 Write property test for intent classification
     - **Property 4: Intent classification is total and single-valued**
     - **Validates: Requirements 4.1, 4.2**
     - _Requirements: 4.1, 4.2_
 
-  - [ ]* 5.7 Write property test for chat message validation
+  - [x]* 5.7 Write property test for chat message validation
     - **Property 2: Chat message validation**
     - **Validates: Requirements 3.3, 3.4, 3.5**
     - _Requirements: 3.3, 3.4, 3.5_
 
-  - [ ] 5.8 Write property test for rules provider determinism
+  - [x] 5.8 Write property test for rules provider determinism
     - **Property 5: Rules provider is deterministic and always replies**
     - **Validates: Requirements 4.3, 4.4, 4.12, 4.13**
     - _Requirements: 4.3, 4.4, 4.12, 4.13, 19.1_
 
-  - [ ]* 5.9 Write property test for chat history restore
+  - [x]* 5.9 Write property test for chat history restore
     - **Property 3: Chat history restore keeps the latest 200 in order**
     - **Validates: Requirements 3.11, 3.12**
     - _Requirements: 3.11, 3.12_
 
-  - [ ]* 5.10 Write component tests for the chat screen
+  - [x]* 5.10 Write component tests for the chat screen
     - Cover bubble labels, live regions, typing indicator removal, empty send keeps focus, chips, and navigation chips
     - _Requirements: 3.1, 3.4, 3.6, 3.8, 3.10, 16.7_
 
-  - [ ]* 5.11 Write example tests for intents and replies
+  - [x]* 5.11 Write example tests for intents and replies
     - Table of BM and EN phrases per intent, tie priority, 100-word limit on topic explanations, and BM wording ("awak" or "korang", no "kau")
     - _Requirements: 4.1, 4.5, 3.14_
 

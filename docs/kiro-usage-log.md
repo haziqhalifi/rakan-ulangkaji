@@ -46,3 +46,9 @@ Copy this block under a new date heading (for example `## Sun 22 Nov 2026`).
 | Kiro feature | Prompt summary | Outcome | Files touched |
 |---|---|---|---|
 | Spec task execution (task 4) | Build the exam timer, runner logic, mark-on-submit wiring, Results screen and the exam runner UI, with property tests for Properties 18 to 23, 30 and 40 and component tests on a fake clock, including retry after a paper load failure | Build, lint, tests and copy-guard pass. userEvent hangs under faked timers, so the component tests use fireEvent | `src/features/exam/*`, `src/styles/exam.css`, `src/core/i18n/strings.*.ts` |
+
+## Thu 19 Nov 2026 (task 5)
+
+| Kiro feature | Prompt summary | Outcome | Files touched |
+|---|---|---|---|
+| Spec task execution (task 5) | Build the AI core interface and rules provider, intent engine, chat input validator, original topic explanations, reply templates and the Rakan chat screen, with property tests for Properties 2 to 5 and component tests | Build, lint, tests and copy-guard pass. All optional sub-tasks were small and done | `src/core/ai/*`, `src/features/chat/*`, `src/content/topicExplanations.ts`, `src/styles/chat.css`, `src/core/i18n/strings.*.ts` |
