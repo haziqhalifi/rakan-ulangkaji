@@ -1,7 +1,8 @@
 import { topicLabel } from '../../content/questionBank';
 import type { Paper } from '../../content/types';
-import { useI18n } from '../../core/i18n';
+import { formatMarks, markUnit, useI18n } from '../../core/i18n';
 import type { Exam_Result } from '../../core/profile';
+import { objectiveOption, optionLabelKey } from './optionLabel';
 import { useNavigate } from '../../app/NavigationContext';
 
 function encouragementKey(percent: number) {
@@ -10,9 +11,9 @@ function encouragementKey(percent: number) {
   return 'exam.results.encourage.low' as const;
 }
 
-export function Results(props: { paper: Paper; result: Exam_Result; onAgain: () => void }) {
-  const { paper, result, onAgain } = props;
-  const { t, pick } = useI18n();
+export function Results(props: { paper: Paper; result: Exam_Result; answers: Record<string, string>; onAgain: () => void }) {
+  const { paper, result, answers, onAgain } = props;
+  const { t, pick, lang } = useI18n();
   const navigate = useNavigate();
   const note = result.trigger === 'manual' ? null : t(`exam.results.auto.${result.trigger}`);
 
@@ -25,6 +26,7 @@ export function Results(props: { paper: Paper; result: Exam_Result; onAgain: () 
           earned: result.totalEarned,
           available: result.totalAvailable,
           percent: result.percent,
+          unit: markUnit(result.totalAvailable, lang),
         })}
       </p>
       <p className="exam-grade">{t('exam.results.grade', { grade: result.grade })}</p>
@@ -54,18 +56,21 @@ export function Results(props: { paper: Paper; result: Exam_Result; onAgain: () 
             <li key={q.id} className="exam-review-item">
               <p className="exam-q-text">{pick(q.question)}</p>
               <p className="exam-score">
-                {t('exam.results.score', { earned: r.marks, available: r.marksAvailable })}
+                {t('exam.results.score', { earned: r.marks, available: r.marksAvailable, unit: markUnit(r.marksAvailable, lang) })}
                 {r.unanswered && <strong> {t('exam.results.unanswered')}</strong>}
               </p>
               <ul className="exam-points">
                 {q.skema.map((p) => {
                   const pr = r.points.find((x) => x.pointId === p.id);
                   const earned = pr?.earned === true;
+                  const objective = objectiveOption(q, answers[q.id]);
                   return (
                     <li key={p.id} className={earned ? 'point-earned' : 'point-missed'}>
                       <span aria-hidden="true">{earned ? '\u2713' : '\u2717'}</span>{' '}
                       <strong>{earned ? t('exam.results.earned') : t('exam.results.missed')}</strong>:{' '}
-                      {pick(p.point)} ({t('exam.marks', { marks: p.marks })})
+                      {objective !== null
+                        ? t(optionLabelKey(objective, earned), { option: objective.correct, chosen: objective.chosen ?? '' })
+                        : `${pick(p.point)} (${formatMarks(p.marks, lang)})`}
                     </li>
                   );
                 })}

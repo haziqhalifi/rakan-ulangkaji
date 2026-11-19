@@ -92,3 +92,9 @@ Copy this block under a new date heading (for example `## Fri 20 Nov 2026`).
 | (steering, spec, hook, chat, and so on) | (one or two sentences) | (what worked, what needed a fix) | (paths) |
 
 Note: tasks 1 to 10 were all executed by Kiro CLI on Thu 19 Nov 2026 (about 18:00 to 19:00 MYT), one headless `kiro-cli chat --v3` run per task, driven by a small shell loop that verified build, lint and tests and committed after each task. Kiroween credits used for the whole build: about 106 of 4,000.
+
+## Thu 19 Nov 2026 (smoke test fixes)
+
+| Kiro feature | Prompt summary | Outcome | Files touched |
+|---|---|---|---|
+| Bug fix from smoke test | Singular and plural mark counts ("1 mark", "2 marks") through a small pluralisation helper, and name the correct option letter in the results breakdown for objective questions | Helper and option label added with unit and component tests. Build, lint, tests and copy-guard pass | `src/core/i18n/plural.ts`, `src/core/i18n/strings.*.ts`, `src/features/exam/{Runner,Results,ExamScreen}.tsx`, `src/features/exam/optionLabel.ts`, `src/features/chat/quiz.ts`, tests |

@@ -3,7 +3,7 @@
 
 import { allQuestions, topicLabel } from '../../content/questionBank';
 import type { Question, QuestionId } from '../../content/types';
-import { pick } from '../../core/i18n';
+import { formatMarks, pick } from '../../core/i18n';
 import type { Bilingual, ChipId, Language, QuizAttempt, TopicId, WeakTopic } from '../../core/profile';
 import { markQuestion } from '../../core/marking/marker';
 import { findTopic } from './intents';
@@ -77,7 +77,7 @@ const COPY = {
     bm: 'Saya belum pasti topik mana. Topik yang ada soalan: {topics}. Pilih satu, atau taip "stop".',
     en: 'I am not sure which topic. Topics with questions: {topics}. Pick one, or type "stop".',
   },
-  questionHead: { bm: 'Soalan {n} daripada {max} ({marks} markah)', en: 'Question {n} of {max} ({marks} marks)' },
+  questionHead: { bm: 'Soalan {n} daripada {max} ({marks})', en: 'Question {n} of {max} ({marks})' },
   retry: {
     bm: 'Jawapan kosong. Cuba taip jawapan awak, atau taip "stop" untuk berhenti.',
     en: 'That answer is empty. Try typing your answer, or type "stop" to finish.',
@@ -118,7 +118,7 @@ function topicNames(topics: readonly TopicId[], lang: Language): string {
 }
 
 function renderQuestion(q: Question, n: number, lang: Language): string {
-  const head = fill(t(COPY.questionHead, lang), { n, max: QUIZ_MAX_QUESTIONS, marks: q.marks });
+  const head = fill(t(COPY.questionHead, lang), { n, max: QUIZ_MAX_QUESTIONS, marks: formatMarks(q.marks, lang) });
   const options = (q.options ?? []).map((o) => `${o.id}. ${t(o.label, lang)}`);
   return [head, t(q.question, lang), ...options].join('\n');
 }

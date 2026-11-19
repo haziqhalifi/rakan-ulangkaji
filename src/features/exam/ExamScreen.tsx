@@ -16,7 +16,7 @@ type Phase =
   | { name: 'resume'; state: RunnerState; leftMs: number }
   | { name: 'running'; state: RunnerState }
   | { name: 'markFailed'; answers: Record<string, string>; trigger: SubmitTrigger }
-  | { name: 'results'; result: Exam_Result };
+  | { name: 'results'; result: Exam_Result; answers: Record<string, string> };
 
 // Default export for React.lazy. The Paper itself loads on mount, in a separate chunk.
 export default function ExamScreen() {
@@ -31,7 +31,7 @@ export default function ExamScreen() {
   const mark = useCallback(
     (p: Paper, answers: Record<string, string>, trigger: SubmitTrigger) => {
       const res = finalizeExam(p, answers, trigger, store);
-      setPhase(res.ok ? { name: 'results', result: res.value } : { name: 'markFailed', answers, trigger });
+      setPhase(res.ok ? { name: 'results', result: res.value, answers } : { name: 'markFailed', answers, trigger });
     },
     [store],
   );
@@ -156,7 +156,7 @@ export default function ExamScreen() {
       )}
 
       {phase.name === 'results' && paper && (
-        <Results paper={paper} result={phase.result} onAgain={() => setPhase({ name: 'instructions' })} />
+        <Results paper={paper} result={phase.result} answers={phase.answers} onAgain={() => setPhase({ name: 'instructions' })} />
       )}
     </section>
   );

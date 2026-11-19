@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import type { Paper } from '../../content/types';
-import { useI18n } from '../../core/i18n';
+import { formatMarks, useI18n } from '../../core/i18n';
 import type { ProfileStore } from '../../core/profile';
 import {
   answeredCount,
@@ -30,7 +30,7 @@ export interface RunnerProps {
 
 export function Runner(props: RunnerProps) {
   const { paper, initial, store, onSubmit, onAnnounce } = props;
-  const { t, pick } = useI18n();
+  const { t, pick, lang } = useI18n();
   const count = paper.questions.length;
   const [state, dispatch] = useReducer((s: RunnerState, a: Parameters<typeof runnerReducer>[1]) => runnerReducer(s, a, count), initial);
   const [remaining, setRemaining] = useState(() => remainingMs(timerOf(initial), Date.now()));
@@ -148,7 +148,7 @@ export function Runner(props: RunnerProps) {
       <section className="exam-question" aria-labelledby="exam-q-heading">
         <h2 id="exam-q-heading">
           {t('exam.question.of', { n: state.currentIndex + 1, total: count })}{' '}
-          <span className="exam-marks">({t('exam.marks', { marks: q.marks })})</span>
+          <span className="exam-marks">({formatMarks(q.marks, lang)})</span>
         </h2>
         {q.kind === 'objective' ? (
           <fieldset>
