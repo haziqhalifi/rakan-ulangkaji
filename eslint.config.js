@@ -45,6 +45,10 @@ function featureBoundaries() {
 
 export default tseslint.config(
   { ignores: ['dist', '.wrangler', 'node_modules'] },
+  {
+    files: ['public/sw.js'],
+    languageOptions: { globals: globals.serviceworker },
+  },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {

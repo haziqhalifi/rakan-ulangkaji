@@ -214,3 +214,42 @@ button.danger {
   border-radius: var(--radius);
   background: var(--surface);
 }
+
+.offline-notice {
+  margin: 0;
+  padding: var(--space-2) var(--space-4);
+  background: #fff3e6;
+  color: var(--ink);
+  border-bottom: 2px solid var(--ember);
+}
+
+/* Layout safety from 360 to 1280 px: long words wrap and media never overflows. */
+.shell-main {
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+
+img,
+svg,
+textarea,
+select {
+  max-width: 100%;
+}
+
+select,
+input[type="text"],
+input[type="password"],
+textarea {
+  min-height: var(--tap);
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  width: 24px;
+  height: 24px;
+  flex: none;
+}
+
+.choice {
+  min-height: var(--tap);
+}

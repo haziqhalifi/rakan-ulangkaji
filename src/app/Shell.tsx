@@ -5,7 +5,9 @@ import { ChatScreen } from '../features/chat/ChatScreen';
 import { ErrorBoundary } from './ErrorBoundary';
 import { LanguageToggle } from './LanguageToggle';
 import { NavigationProvider } from './NavigationContext';
+import { OfflineNotice } from './OfflineNotice';
 import { StatusBanner } from './StatusBanner';
+import { UpdateNotice } from './UpdateNotice';
 import { Onboarding } from './Onboarding';
 import { SettingsScreen } from './SettingsScreen';
 import { HomeScreen } from './screens';
@@ -68,11 +70,15 @@ export function Shell() {
             <LanguageToggle />
           </div>
         </header>
+        <OfflineNotice />
         <StatusBanner />
+        <UpdateNotice />
         <main className="shell-main">
-          <ErrorBoundary key={route} fallback={(error) => <ErrorPanel error={error} />}>
-            <Suspense fallback={<p role="status">{t('loading')}</p>}>{screen}</Suspense>
-          </ErrorBoundary>
+          <div key={route} className="seam-wipe">
+            <ErrorBoundary fallback={(error) => <ErrorPanel error={error} />}>
+              <Suspense fallback={<p role="status">{t('loading')}</p>}>{screen}</Suspense>
+            </ErrorBoundary>
+          </div>
         </main>
         {profile && (
           <nav className="shell-nav" aria-label={t('nav.main')}>

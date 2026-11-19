@@ -49,3 +49,10 @@
     animation: none;
   }
 }
+
+/* Motion off: the seam does not animate and the typing indicator is plain text. */
+@media (prefers-reduced-motion: reduce) {
+  .typing {
+    animation: none;
+  }
+}

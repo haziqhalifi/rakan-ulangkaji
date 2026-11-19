@@ -515,51 +515,51 @@ Wed 2 Dec and Thu 3 Dec are buffer for overruns and the manual checklist on a re
   - [x] 8.11 Checkpoint - Ensure all tests pass
     - Run `npm run lint`, `npm test`, and `npm run build`. Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 9. PWA, offline behaviour, and accessibility pass (~1 evening)
-  - [ ] 9.1 Add the web manifest and icons
+- [x] 9. PWA, offline behaviour, and accessibility pass (~1 evening)
+  - [x] 9.1 Add the web manifest and icons
     - Create `public/manifest.webmanifest` (name, short name, `display: standalone`, theme colour, 192 and 512 icons plus one maskable) and link it from `index.html`
     - Draw original SVG icons and generate the PNGs with a small Node script that uses only built-in modules, so no new dependency is needed
     - _Requirements: 15.1, 17.8_
 
-  - [ ] 9.2 Implement the service worker and precache plugin
+  - [x] 9.2 Implement the service worker and precache plugin
     - Write `public/sw.js` (precache the shell, cache-first runtime caching for lazy chunks, network only for `/api/chat`, delete old caches on activate, offline navigation falls back to cached `index.html`)
     - Add a small Vite plugin that writes `dist/precache-manifest.json`
     - Create `src/app/registerSW.ts`: never call `skipWaiting()` or `clients.claim()`, never reload on `controllerchange`, and show no update prompt while an exam is in progress
     - _Requirements: 15.2, 15.3, 15.4, 15.8, 15.9_
 
-  - [ ] 9.3 Add offline experience and lazy-chunk failure handling
+  - [x] 9.3 Add offline experience and lazy-chunk failure handling
     - Add `OfflineNotice` (online and offline events) and the "needs one online visit first" message when a lazy import rejects offline, with a link back to Rakan
     - Keep every rules-based Rakan feature working offline
     - _Requirements: 15.5, 15.6, 15.7, 15.11_
 
-  - [ ] 9.4 Add the bundle size gate
+  - [x] 9.4 Add the bundle size gate
     - Create `scripts/check-size.mjs` that gzips the entry chunks and fails above 200 KB, and run it after `vite build` in `npm run build`
     - Confirm exam and pathway content stay in lazy chunks
     - _Requirements: 15.10, 18.1, 18.2_
 
-  - [ ] 9.5 Add the stitched-seam mode transition
+  - [x] 9.5 Add the stitched-seam mode transition
     - Add the CSS-only wipe of 300 ms or less on mode change, with navigation not delayed, and no animation under `prefers-reduced-motion` (typing indicator becomes a static element)
     - _Requirements: 17.6, 17.7, 16.9_
 
-  - [ ] 9.6 Run the accessibility pass
+  - [x] 9.6 Run the accessibility pass
     - Check that every control has an accessible name from i18n, Tab and Enter or Space work with no keyboard trap, targets are at least 44 px, and no screen scrolls horizontally from 360 to 1280 px
     - Pair every colour-only state (correct, missed, selected, hint level, timer warning) with an icon or text
     - Verify the three mode skins keep body text contrast at least 4.5:1
     - _Requirements: 16.1, 16.2, 16.3, 16.4, 16.5, 16.6, 16.10, 17.10_
 
-  - [ ]* 9.7 Write the contrast test
+  - [x]* 9.7 Write the contrast test
     - Compute the WCAG ratio for each token pair per mode and assert at least 4.5 for text and 3 for large text, borders, and focus
     - _Requirements: 16.2, 17.10_
 
-  - [ ]* 9.8 Write accessibility component tests
+  - [x]* 9.8 Write accessibility component tests
     - Check accessible names for every button and input, the `lang` attribute on load and on toggle, live regions present, and the language toggle on every screen
     - _Requirements: 16.6, 16.7, 16.8, 16.11, 16.12, 14.1_
 
-  - [ ]* 9.9 Write tests for the service worker registration guard
+  - [x]* 9.9 Write tests for the service worker registration guard
     - Check there is no reload on `controllerchange` and no update prompt while `examInProgress` is set
     - _Requirements: 15.8, 15.9_
 
-  - [ ] 9.10 Checkpoint - Ensure all tests pass
+  - [x] 9.10 Checkpoint - Ensure all tests pass
     - Run `npm run lint`, `npm test`, and `npm run build`. Ensure all tests pass, ask the user if questions arise.
 
 - [ ] 10. Submission: docs, deploy guide, Devpost checklist, final gates (~1 evening)

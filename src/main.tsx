@@ -1,6 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { App } from './App';
+import { registerServiceWorker, UPDATE_READY_EVENT } from './app/registerSW';
 import { detectDefaultLanguage } from './core/i18n';
 import { createProfileStore } from './core/profile';
 import { createStorageService } from './core/storage';
@@ -27,4 +28,11 @@ void store
         <App store={store} />
       </StrictMode>,
     );
+    if (import.meta.env.PROD) {
+      const sw = registerServiceWorker({
+        isExamInProgress: () => store.getState().examInProgress !== null,
+        onUpdateReady: () => window.dispatchEvent(new Event(UPDATE_READY_EVENT)),
+      });
+      store.subscribe(() => sw.flush());
+    }
   });

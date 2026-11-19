@@ -175,3 +175,10 @@
   font-size: 1.15rem;
   font-weight: 700;
 }
+
+/* The current question is marked by a thick underline as well as colour. */
+.exam-grid-btn[aria-current="step"] {
+  text-decoration: underline;
+  text-decoration-thickness: 3px;
+  border-width: 3px;
+}

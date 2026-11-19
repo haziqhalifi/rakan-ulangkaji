@@ -41,6 +41,8 @@ export const stringsEn = {
   'settings.title': 'Settings',
     'loading': 'Loading...',
   'status.dismiss': 'Close',
+  'offline.notice': 'You are offline. Rakan replies, quizzes and your saved progress still work. Remote helpers are paused.',
+  'status.updateReady': 'A new version is ready. It will start the next time you open the app.',
   'status.writeFailed': 'Your progress may not be saved on this device. We will try again on your next change.',
   'status.memoryOnly': 'This browser is not letting us save. Your progress may not be saved after you close the page.',
   'status.unreadable':

@@ -43,6 +43,8 @@ export const stringsBm: Record<StringKey, string> = {
   'settings.title': 'Tetapan',
     'loading': 'Sedang dimuatkan...',
   'status.dismiss': 'Tutup',
+  'offline.notice': 'Awak sedang luar talian. Balasan Rakan, kuiz dan kemajuan tersimpan masih berfungsi. Pembantu jauh dijeda.',
+  'status.updateReady': 'Versi baharu sudah sedia. Ia akan bermula bila awak buka app ini lain kali.',
   'status.writeFailed': 'Kemajuan awak mungkin tidak disimpan pada peranti ini. Kami cuba lagi pada perubahan seterusnya.',
   'status.memoryOnly': 'Pelayar ini tidak membenarkan kami menyimpan. Kemajuan awak mungkin hilang selepas halaman ditutup.',
   'status.unreadable':

@@ -65,3 +65,9 @@ Copy this block under a new date heading (for example `## Sun 22 Nov 2026`).
 | Kiro feature | Prompt summary | Outcome | Files touched |
 |---|---|---|---|
 | Spec task execution (task 8) | Add optional remote AI: payload builder, consent gate, 8 second timeout and silent rules fallback, UserKey and Proxy providers, Pages Function proxy, Settings consent UI, with property tests for Properties 6 to 9 and fallback example tests | Build, lint, tests and copy-guard pass. The default path stays rules only. Remote text is limited to topic help, greeting and unknown intents. All optional tests (8.7, 8.8, 8.10) were small, so they were done | `src/core/ai/*`, `functions/api/chat.ts`, `src/app/SettingsScreen.tsx`, `src/features/chat/ChatScreen.tsx`, `src/core/profile/ProfileStore.ts`, `src/core/i18n/strings.*.ts` |
+
+## Thu 19 Nov 2026 (task 9)
+
+| Kiro feature | Prompt summary | Outcome | Files touched |
+|---|---|---|---|
+| Spec task execution (task 9) | Add the web manifest and icons, a hand-written service worker with a precache manifest plugin, offline notice, bundle size gate, seam wipe, and an accessibility pass | Build, lint, tests and copy-guard pass. Initial JS is about 99 KB gzip against the 200 KB limit, and exam and board stay in lazy chunks. The optional tests 9.7, 9.8 and 9.9 were small, so they were done. The ember colour token was darkened to pass the 4.5:1 contrast test | `public/manifest.webmanifest`, `public/sw.js`, `public/icons/*`, `scripts/make-icons.mjs`, `scripts/precache-plugin.mjs`, `scripts/check-size.mjs`, `src/app/registerSW.ts`, `src/app/OfflineNotice.tsx`, `src/app/UpdateNotice.tsx`, `src/styles/*.css`, `src/core/i18n/strings.*.ts` |

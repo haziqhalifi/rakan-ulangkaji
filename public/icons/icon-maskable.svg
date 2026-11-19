@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Rakan Ulangkaji">
+  <rect width="512" height="512" fill="#5a3d6b"/>
+  <rect x="96" y="96" width="320" height="320" rx="48" fill="#fbf8f1"/>
+  <rect x="116" y="116" width="280" height="280" rx="32" fill="none" stroke="#6b5b7b" stroke-width="8" stroke-dasharray="24 16"/>
+  <path d="M186 338V174h92a50 50 0 0 1 0 100h-92m92 0 56 64" fill="none" stroke="#5a3d6b" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
