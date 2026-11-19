@@ -198,58 +198,58 @@ Wed 2 Dec and Thu 3 Dec are buffer for overruns and the manual checklist on a re
     - Cover unit stripping, structured multi-point partial credit, one correct and one incorrect answer per skema point, and unanswered
     - _Requirements: 10.2, 10.3, 10.4, 10.11, 19.5_
 
-- [ ] 4. Exam runner, timer, and results (~1 evening)
-  - [ ] 4.1 Implement the timer
+- [x] 4. Exam runner, timer, and results (~1 evening)
+  - [x] 4.1 Implement the timer
     - Create `features/exam/timer.ts` with `remainingMs`, `formatMmSs`, `hasExpired`, and `shouldWarn`, based on the start timestamp and an injectable `now`
     - _Requirements: 9.2, 9.3, 9.5, 9.8, 9.15_
 
-  - [ ] 4.2 Write property test for the remaining time formula
+  - [x] 4.2 Write property test for the remaining time formula
     - **Property 18: Remaining time formula**
     - **Validates: Requirements 9.2, 9.8, 9.15**
     - _Requirements: 9.2, 9.8, 9.15, 19.6_
 
-  - [ ] 4.3 Write property test for the warning firing once
+  - [x] 4.3 Write property test for the warning firing once
     - **Property 20: Warning fires once**
     - **Validates: Requirements 9.5**
     - _Requirements: 9.5, 19.6_
 
-  - [ ]* 4.4 Write property test for the time display format
+  - [x]* 4.4 Write property test for the time display format
     - **Property 19: Time display format**
     - **Validates: Requirements 9.3**
     - _Requirements: 9.3_
 
-  - [ ] 4.5 Write example tests for the timer on a fake clock
+  - [x] 4.5 Write example tests for the timer on a fake clock
     - Cover counting down, stopping at zero, a single submission at expiry, and resume at fixed timestamps
     - _Requirements: 9.2, 9.6, 9.10, 9.11, 19.6_
 
-  - [ ] 4.6 Implement the runner logic
+  - [x] 4.6 Implement the runner logic
     - Create a pure `runnerLogic.ts` with the answers and navigation reducer, a `submittedRef`-style submit-once guard (manual, timeout, resume at zero), and the resume decision (offer resume when time remains, auto-submit at zero)
     - Keep answers, current index, and start timestamp outside i18n state
     - _Requirements: 9.4, 9.6, 9.7, 9.10, 9.11, 9.12, 14.3_
 
-  - [ ] 4.7 Write property test for single submission
+  - [x] 4.7 Write property test for single submission
     - **Property 21: Submission happens exactly once**
     - **Validates: Requirements 9.6, 9.7, 9.11, 9.12, 19.6**
     - _Requirements: 9.6, 9.7, 9.11, 9.12, 19.6_
 
-  - [ ] 4.8 Write property test for the resume decision
+  - [x] 4.8 Write property test for the resume decision
     - **Property 22: Resume decision**
     - **Validates: Requirements 9.10, 9.11**
     - _Requirements: 9.10, 9.11, 19.6_
 
-  - [ ]* 4.9 Write property test for answers surviving navigation and language change
+  - [x]* 4.9 Write property test for answers surviving navigation and language change
     - **Property 23: Answers survive navigation and language change**
     - **Validates: Requirements 9.4, 14.3**
     - _Requirements: 9.4, 14.3_
 
-  - [ ] 4.10 Build the Results screen and mark-on-submit wiring
+  - [x] 4.10 Build the Results screen and mark-on-submit wiring
     - Create `exam/Results.tsx` and `grade.ts` use: run `markPaper` in a try/catch, call `ProfileStore.addExamResult`, and show per-question earned and missed points, explanations in the selected language (including unanswered and fully correct), per-topic breakdown, total, and estimated grade band
     - Use encouraging wording from i18n only
     - Show a "See my pathways" button that calls the Shell `navigate()`, with a guidance-only note of at most 120 characters beside it
     - On marker failure keep the answers, show a kind message, and offer retry
     - _Requirements: 10.1, 10.5, 10.6, 10.7, 10.8, 10.9, 10.10, 10.16, 10.17, 13.3, 2.2, 2.3_
 
-  - [ ] 4.11 Build the exam screens and runner UI
+  - [x] 4.11 Build the exam screens and runner UI
     - Create `ExamScreen` with Instructions (duration, question count, total marks, timer stopped until confirm), the Runner (fixed-header `role="timer"` at 1.5 times body size or more, any-order navigation, kept answers), submit confirmation (cancel keeps timer running), and a visually hidden `aria-live` region for the 5-minute warning and auto-submit
     - Run the timer with a 250 ms interval that recomputes from `Date.now()`, with a `visibilitychange` recompute
     - Save progress after each answer (debounced 300 ms) and every 10 s through `saveExamInProgress`, and show the kind banner on save failure
@@ -258,21 +258,21 @@ Wed 2 Dec and Thu 3 Dec are buffer for overruns and the manual checklist on a re
     - Write `exam.css` (paper background, square corners, serif system stack, no bubbles)
     - _Requirements: 8.6, 8.7, 9.1, 9.2, 9.3, 9.4, 9.5, 9.6, 9.7, 9.8, 9.9, 9.10, 9.11, 9.12, 9.13, 9.14, 16.8, 17.3, 20.4_
 
-  - [ ]* 4.12 Write property test for exam results updating shared progress
+  - [x]* 4.12 Write property test for exam results updating shared progress
     - **Property 30: Exam result updates shared progress**
     - **Validates: Requirements 2.2, 2.3, 7.7, 10.16, 20.5**
     - _Requirements: 2.2, 2.3, 7.7, 10.16, 20.5_
 
-  - [ ]* 4.13 Write property test for demo timer not changing marking
+  - [x]* 4.13 Write property test for demo timer not changing marking
     - **Property 40: Demo timer does not change marking**
     - **Validates: Requirements 20.4**
     - _Requirements: 20.4_
 
-  - [ ]* 4.14 Write component tests for the exam flow
+  - [x]* 4.14 Write component tests for the exam flow
     - Use a fake clock and a canned answer set: instructions, warning region, auto-submit, results screen, retry on paper load failure
     - _Requirements: 8.7, 9.1, 9.5, 9.6, 10.5, 10.8_
 
-  - [ ] 4.15 Checkpoint - Ensure all tests pass
+  - [x] 4.15 Checkpoint - Ensure all tests pass
     - Run `npm run lint`, `npm test`, and `npm run build`. Ensure all tests pass, ask the user if questions arise.
 
 - [ ] 5. Rakan chat UI, intent engine, and rules provider (~1 evening)

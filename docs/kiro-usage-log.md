@@ -40,3 +40,9 @@ Copy this block under a new date heading (for example `## Sun 22 Nov 2026`).
 | Kiro feature | Prompt summary | Outcome | Files touched |
 |---|---|---|---|
 | Spec task execution (task 3) | Build content types and grade bands, an original Matematik Paper (12 objective, 4 structured) with a shared question bank, the deterministic Marker, and property and example tests for Properties 24 to 29 and 41 | Build, lint, tests and copy-guard pass | `src/content/*`, `src/features/exam/marker.ts`, `src/features/exam/*.test.ts`, `src/test/arbitraries/exam.ts` |
+
+## Thu 19 Nov 2026 (task 4)
+
+| Kiro feature | Prompt summary | Outcome | Files touched |
+|---|---|---|---|
+| Spec task execution (task 4) | Build the exam timer, runner logic, mark-on-submit wiring, Results screen and the exam runner UI, with property tests for Properties 18 to 23, 30 and 40 and component tests on a fake clock, including retry after a paper load failure | Build, lint, tests and copy-guard pass. userEvent hangs under faked timers, so the component tests use fireEvent | `src/features/exam/*`, `src/styles/exam.css`, `src/core/i18n/strings.*.ts` |
