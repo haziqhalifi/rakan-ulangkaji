@@ -39,7 +39,7 @@ The full demo runs with no network and no API key. Rakan replies with a determin
 
 ## Zero-cost hosting
 
-Static site on the Cloudflare Pages free tier. Build command `npm run build`, output directory `dist`. No paid services. See [`docs/deploy-cloudflare-pages.md`](docs/deploy-cloudflare-pages.md).
+Static site on the Cloudflare Pages free tier. Build command `npm run build`, output directory `dist`. No paid services. See [`docs/deploy-cloudflare-pages.md`](docs/deploy-cloudflare-pages.md). A GitHub Pages option (no remote AI) is in [`docs/deploy-github-pages.md`](docs/deploy-github-pages.md).
 
 ## How Kiro was used
 

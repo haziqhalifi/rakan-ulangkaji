@@ -71,6 +71,12 @@ Exact prompts used for each run are saved in `kiro-prompts/` (kept outside docs/
 |---|---|---|---|
 | Spec task execution (task 10) | Write the README, demo script, Kiro usage write-up, deploy guide, Devpost checklist and manual checklist, add a public copy scan test, and run the final gates | Docs added, optional test 10.7 done because it was small. Build, lint, tests and copy-guard pass | `README.md`, `docs/demo-script.md`, `docs/kiro-usage.md`, `docs/deploy-cloudflare-pages.md`, `docs/devpost-checklist.md`, `docs/manual-checklist.md`, `src/test/publicCopy.test.ts` |
 
+## Thu 19 Nov 2026 (GitHub Pages)
+
+| Kiro feature | Prompt summary | Outcome | Files touched |
+|---|---|---|---|
+| Chat-driven deployment config | Make the app deployable to GitHub Pages under `/rakan-ulangkaji/` while keeping Cloudflare Pages working: base path from env, base-aware service worker and precache, GitHub Actions workflow, short deploy doc | Both builds checked (default base and subpath), lint, tests and copy guard pass. No commit, push or deploy was run | `vite.config.ts`, `scripts/precache-plugin.mjs`, `scripts/check-size.mjs`, `public/sw.js`, `index.html`, `src/app/registerSW.ts`, `src/core/ai/proxyProvider.ts`, `.github/workflows/pages.yml`, `docs/deploy-github-pages.md` |
+
 ## Template for future entries
 
 Copy this block under a new date heading (for example `## Fri 20 Nov 2026`).

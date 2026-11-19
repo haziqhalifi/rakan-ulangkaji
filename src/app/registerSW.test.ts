@@ -46,6 +46,13 @@ describe('registerServiceWorker', () => {
     expect(onUpdateReady).toHaveBeenCalledTimes(1);
   });
 
+  it('registers the worker under the app base URL', async () => {
+    const env = fakeEnv(false);
+    registerServiceWorker({ isExamInProgress: () => false, onUpdateReady: () => undefined, nav: env.nav });
+    await env.install();
+    expect(env.container.register).toHaveBeenCalledWith(`${import.meta.env.BASE_URL}sw.js`);
+  });
+
   it('holds the notice during an exam and shows it after flush', async () => {
     const env = fakeEnv(true);
     let inExam = true;

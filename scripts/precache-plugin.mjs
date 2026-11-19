@@ -9,21 +9,24 @@ import { join } from 'node:path';
 export function precacheManifest() {
   let outDir = 'dist';
   let files = [];
+  let base = '/';
   return {
     name: 'rakan-precache-manifest',
     apply: 'build',
     configResolved(config) {
       outDir = config.build.outDir;
+      base = config.base.endsWith('/') ? config.base : config.base + '/';
     },
     generateBundle(_options, bundle) {
-      const shell = new Set(['/', '/index.html', '/manifest.webmanifest']);
+      const url = (name) => base + name;
+      const shell = new Set([base, url('index.html'), url('manifest.webmanifest')]);
       const addChunk = (name) => {
         const item = bundle[name];
-        if (!item || item.type !== 'chunk' || shell.has('/' + name)) return;
-        shell.add('/' + name);
+        if (!item || item.type !== 'chunk' || shell.has(url(name))) return;
+        shell.add(url(name));
         item.imports.forEach(addChunk); // static imports only, dynamic ones stay lazy
         const css = item.viteMetadata?.importedCss;
-        css?.forEach((c) => shell.add('/' + c));
+        css?.forEach((c) => shell.add(url(c)));
       };
       for (const [name, item] of Object.entries(bundle)) {
         if (item.type === 'chunk' && item.isEntry) addChunk(name);
@@ -32,7 +35,7 @@ export function precacheManifest() {
     },
     closeBundle() {
       const icons = join('public', 'icons');
-      const iconFiles = existsSync(icons) ? readdirSync(icons).map((f) => '/icons/' + f) : [];
+      const iconFiles = existsSync(icons) ? readdirSync(icons).map((f) => base + 'icons/' + f) : [];
       const all = [...new Set([...files, ...iconFiles])].sort();
       const buildId = createHash('sha256').update(all.join('|')).update(String(Date.now())).digest('hex').slice(0, 10);
       writeFileSync(join(outDir, 'precache-manifest.json'), JSON.stringify({ buildId, files: all }, null, 2));

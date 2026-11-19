@@ -124,6 +124,7 @@ export const stringsBm: Record<StringKey, string> = {
   'settings.delete.failed': 'Kami tidak dapat memadam semuanya. Data awak tidak berubah. Cuba lagi.',
   'settings.remote.title': 'AI jauh (pilihan)',
   'settings.remote.intro': 'Rakan berfungsi sepenuhnya tanpa internet dengan jawapan terbina dalam. Awak boleh hidupkan pembantu jauh supaya sesetengah jawapan lebih bebas. Ia mati sehingga awak hidupkannya. Markah dan keputusan laluan tidak pernah datang daripadanya.',
+  'settings.remote.proxy.note': 'Pembantu terbina dalam memerlukan penghantaran Cloudflare. Di GitHub Pages ia tidak tersedia, dan Rakan guna jawapan terbina dalam.',
   'settings.remote.proxy.label': 'Pembantu terbina dalam (Cloudflare Workers AI peringkat percuma)',
   'settings.remote.userKey.label': 'Kunci percuma saya sendiri',
   'settings.remote.vendor': 'Penyedia untuk kunci saya',

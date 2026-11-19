@@ -51,7 +51,7 @@ export function registerServiceWorker(opts: RegisterOptions): SWHandle {
   };
 
   void container
-    .register(opts.swUrl ?? '/sw.js')
+    .register(opts.swUrl ?? `${import.meta.env.BASE_URL}sw.js`)
     .then(watch)
     .catch(() => undefined); // The app works without a worker.
   return handle;

@@ -122,6 +122,7 @@ export const stringsEn = {
   'settings.delete.failed': 'We could not delete everything. Your data is unchanged. Please try again.',
   'settings.remote.title': 'Remote AI (optional)',
   'settings.remote.intro': 'Rakan works fully offline with built-in replies. You can switch on a remote helper to phrase some answers more freely. It is off until you turn it on. Marks and pathway results never come from it.',
+  'settings.remote.proxy.note': 'The built-in helper needs the Cloudflare deploy. On GitHub Pages it is not available, and Rakan uses built-in replies instead.',
   'settings.remote.proxy.label': 'Built-in helper (Cloudflare Workers AI free tier)',
   'settings.remote.userKey.label': 'My own free-tier key',
   'settings.remote.vendor': 'Provider for my key',

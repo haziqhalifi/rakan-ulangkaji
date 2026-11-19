@@ -8,7 +8,7 @@ const DIST = 'dist';
 const LIMIT = 200 * 1024;
 
 const html = readFileSync(join(DIST, 'index.html'), 'utf8');
-const refs = [...html.matchAll(/(?:src|href)="\/(assets\/[^"]+\.js)"/g)].map((m) => m[1]);
+const refs = [...html.matchAll(/(?:src|href)="[^"]*?(assets\/[^"]+\.js)"/g)].map((m) => m[1]);
 if (refs.length === 0) {
   console.error('check-size: no entry scripts found in dist/index.html');
   process.exit(1);

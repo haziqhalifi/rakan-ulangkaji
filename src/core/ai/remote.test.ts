@@ -53,6 +53,23 @@ describe('generateReply fallback path', () => {
     expect(r.source).toBe('rules');
   });
 
+  it('falls back silently on a 404 or a network error (static hosting without /api/chat)', async () => {
+    const notFound = vi.fn(() => Promise.resolve(new Response('Not found', { status: 404 })));
+    const broken = vi.fn(() => Promise.reject(new TypeError('Failed to fetch')));
+    for (const fetchFn of [notFound, broken]) {
+      const p = createProxyProvider({ fetchFn: fetchFn as unknown as typeof fetch });
+      const r = await generateReply(makeRequest(), { settings: consentedSettings(), providers: { proxy: p }, online });
+      expect(r.source).toBe('rules');
+    }
+  });
+
+  it('calls the proxy under the app base path', async () => {
+    const fetchFn = vi.fn(() => Promise.resolve(new Response('{}', { status: 404 })));
+    const p = createProxyProvider({ fetchFn: fetchFn as unknown as typeof fetch });
+    await generateReply(makeRequest(), { settings: consentedSettings(), providers: { proxy: p }, online });
+    expect((fetchFn.mock.calls[0] as unknown[])[0]).toBe(`${import.meta.env.BASE_URL}api/chat`);
+  });
+
   it('makes no call without consent, when disabled, or offline', async () => {
     const p = okProvider();
     const noConsent = defaultSettings();

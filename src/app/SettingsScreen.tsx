@@ -324,6 +324,7 @@ function RemoteAiSection() {
               <input type="checkbox" checked={s.enabled && Boolean(s.consentAt)} onChange={(e) => toggle(id, e.target.checked)} />
               {t(id === 'proxy' ? 'settings.remote.proxy.label' : 'settings.remote.userKey.label')}
             </label>
+            {id === 'proxy' && <p className="field-hint">{t('settings.remote.proxy.note')}</p>}
             <p role="status">{t(s.enabled && s.consentAt ? 'settings.remote.status.on' : 'settings.remote.status.off')}</p>
             {pending === id && (
               <div role="alertdialog" aria-labelledby={`consent-title-${id}`} className="confirm">

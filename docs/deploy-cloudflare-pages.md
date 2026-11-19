@@ -2,6 +2,8 @@
 
 The human runs this deploy. No code, script or task in this repository pushes, deploys or creates remotes.
 
+Deploying to GitHub Pages instead? See [deploy-github-pages.md](deploy-github-pages.md).
+
 ## 1. Create the project
 
 1. Push the repository to a public Git host yourself.

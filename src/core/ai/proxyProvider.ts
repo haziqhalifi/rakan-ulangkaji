@@ -1,7 +1,9 @@
 import { PROXY_MAX_BYTES, byteLength } from './payload';
 import type { AIProvider, Reply } from './types';
 
-export const PROXY_PATH = '/api/chat';
+// Base-aware so a subpath deploy calls its own origin path. Static hosts answer 404 or 405,
+// which the caller treats as unavailable and falls back to the rule provider.
+export const PROXY_PATH = `${import.meta.env.BASE_URL}api/chat`;
 
 export function createProxyProvider(options: { fetchFn?: typeof fetch } = {}): AIProvider {
   const doFetch = options.fetchFn ?? ((...a: Parameters<typeof fetch>) => fetch(...a));

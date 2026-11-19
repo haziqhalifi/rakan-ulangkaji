@@ -5,6 +5,10 @@
 const BUILD_ID = '__BUILD_ID__';
 const CACHE = 'rakan-v' + BUILD_ID;
 const scopeUrl = (path) => new URL(path, self.registration.scope).href;
+// The manifest lists base-prefixed paths such as /rakan-ulangkaji/assets/a.js.
+// Keep only the part below this worker's scope so it also works at the root.
+const SCOPE_PATH = new URL(self.registration.scope).pathname;
+const toScopeUrl = (f) => scopeUrl(f.startsWith(SCOPE_PATH) ? f.slice(SCOPE_PATH.length) : f.replace(/^\//, ''));
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -12,7 +16,7 @@ self.addEventListener('install', (event) => {
       const res = await fetch(scopeUrl('precache-manifest.json'), { cache: 'no-store' });
       const manifest = await res.json();
       const cache = await caches.open(CACHE);
-      await cache.addAll(manifest.files.map((f) => scopeUrl(f.replace(/^\//, ''))));
+      await cache.addAll(manifest.files.map(toScopeUrl));
     })(),
   );
 });
@@ -31,7 +35,7 @@ self.addEventListener('fetch', (event) => {
   const url = new URL(req.url);
   if (url.origin !== self.location.origin) return;
   // Chat proxy: network only, never cached.
-  if (url.pathname.startsWith('/api/')) return;
+  if (url.pathname.startsWith(SCOPE_PATH + 'api/')) return;
 
   if (req.mode === 'navigate') {
     event.respondWith(
