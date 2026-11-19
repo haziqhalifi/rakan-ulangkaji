@@ -22,6 +22,12 @@ Exact prompts used for each run are saved in `kiro-prompts/` (kept outside docs/
 |---|---|---|---|
 | Spec task execution (task 1) | Build foundations: shared types, design tokens, i18n, Storage_Service, ProfileStore with weak topics, Shell with hash router and lazy routes, ESLint boundaries, and tests for tasks 1.7 to 1.12 | Build, lint and tests pass. A copy-guard hit on the banned-word regex in a test was fixed by building the pattern from letters | `src/core/*`, `src/app/*`, `src/features/*/` placeholders, `src/styles/*`, `src/test/*`, `eslint.config.js`, `vite.config.ts`, `package.json` |
 
+## Mon 23 Nov 2026
+
+| Kiro feature | Prompt summary | Outcome | Files touched |
+|---|---|---|---|
+| Spec task execution (task 2) | Build onboarding in four screens, profile validation, settings, export, import and delete, plus property and component tests (tasks 2.1 to 2.7, including the optional 2.2 and 2.6) | Build, lint, tests and copy-guard pass | `src/app/Onboarding.tsx`, `src/app/SettingsScreen.tsx`, `src/app/ProfileFields.tsx`, `src/core/profile/*`, `src/core/storage/exportImport.ts`, `src/core/i18n/*`, tests |
+
 ## Template for future entries
 
 Copy this block under a new date heading (for example `## Sun 22 Nov 2026`).

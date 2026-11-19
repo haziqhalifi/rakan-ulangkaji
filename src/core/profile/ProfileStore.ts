@@ -1,3 +1,4 @@
+import { buildExport, parseImport, type ExportBundle, type ImportError } from '../storage/exportImport';
 import type { StorageService } from '../storage/types';
 import {
   MAX_CHAT_MESSAGES,
@@ -13,9 +14,12 @@ import {
   type PersistedData,
   type QuizAttempt,
   type RemoteProviderId,
+  type Result,
   type Settings,
+  type StudentProfile,
   type SpmSubject,
 } from './types';
+import { validateProfileInput, type ProfileInput, type ValidationError } from './validation';
 import { computeWeakTopics, deriveTopicMastery, type TopicMastery, type WeakTopic } from './weakTopics';
 
 export type StorageStatus = 'ok' | 'write_failed' | 'memory_only' | 'unreadable';
@@ -42,11 +46,26 @@ export type SettingsPatch = {
   share?: Partial<Settings['share']>;
 };
 
+export type SaveProfileError = { kind: 'invalid'; errors: ValidationError[] } | { kind: 'storage' };
+
 export interface ProfileStore {
   getState(): ProfileState;
   subscribe(listener: () => void): () => void;
   /** Load saved data. Safe to call once at start-up. */
   init(): Promise<void>;
+  /** Validate and save an edit. Listeners are told synchronously. The write follows shortly. */
+  saveProfile(input: ProfileInput): Result<StudentProfile, ValidationError[]>;
+  /**
+   * Validate, then write to storage first. The profile only appears in the state if the
+   * write worked, so onboarding can stay open with its values when storage fails.
+   */
+  createProfile(input: ProfileInput): Promise<Result<StudentProfile, SaveProfileError>>;
+  /** The profile, progress, grades and chat. Never API keys, settings or exam state. */
+  exportData(): ExportBundle;
+  /** Replace profile, progress, grades and chat with a validated import. Settings stay as they are. */
+  importData(bundle: unknown): Result<void, ImportError>;
+  /** Remove every stored item (data, consent, keys, language preference) and reset to empty. */
+  deleteAll(): Promise<void>;
   setLanguage(lang: Language): void;
   appendChat(msg: ChatMessage): void;
   recordQuizAttempt(a: QuizAttempt): void;
@@ -185,6 +204,17 @@ export function createProfileStore(options: ProfileStoreOptions): ProfileStore {
     };
   }
 
+  /** A fresh start is allowed once the student chooses to replace unreadable data. */
+  function unblock() {
+    if (!writesBlocked) return;
+    writesBlocked = false;
+    if (state.storageStatus === 'unreadable') commit({ ...state, storageStatus: 'ok' });
+  }
+
+  function validated(input: ProfileInput) {
+    return validateProfileInput(input, (state.profile?.createdAt ?? now().toISOString()));
+  }
+
   return {
     getState: () => state,
     subscribe(listener) {
@@ -223,6 +253,62 @@ export function createProfileStore(options: ProfileStoreOptions): ProfileStore {
     },
 
     setLanguage: setLang,
+
+    saveProfile(input) {
+      const checked = validated(input);
+      if (!checked.ok) return checked;
+      unblock();
+      const profile = checked.value;
+      mutate((d) => ({ ...d, profile }), { immediate: true });
+      commit({ ...state, language: profile.language });
+      void storage.savePref('lang', profile.language).catch(() => undefined);
+      return checked;
+    },
+
+    async createProfile(input) {
+      const checked = validated(input);
+      if (!checked.ok) return { ok: false, error: { kind: 'invalid', errors: checked.error } };
+      const profile = checked.value;
+      const next = capData({ ...toPersisted(state), profile });
+      // Let any earlier write finish first, so the order on disk matches the order of calls.
+      await writeChain;
+      try {
+        await storage.save(next);
+      } catch {
+        return { ok: false, error: { kind: 'storage' } };
+      }
+      unblock();
+      dirty = false;
+      commit({ ...state, ...next, ...derive(next), language: profile.language, storageStatus: 'ok' });
+      void storage.savePref('lang', profile.language).catch(() => undefined);
+      return { ok: true, value: profile };
+    },
+
+    exportData: () => buildExport(toPersisted(state), now()),
+
+    importData(bundle) {
+      const parsed = parseImport(bundle);
+      if (!parsed.ok) return parsed;
+      unblock();
+      const incoming = parsed.value;
+      mutate((d) => ({ ...d, ...incoming, examInProgress: null }), { immediate: true });
+      if (incoming.profile) commit({ ...state, language: incoming.profile.language });
+      return { ok: true, value: undefined };
+    },
+
+    async deleteAll() {
+      if (timer !== null) {
+        clearTimeout(timer);
+        timer = null;
+      }
+      await writeChain;
+      // If this throws, nothing changed in memory, so the student can try again.
+      await storage.clearAll();
+      dirty = false;
+      writesBlocked = false;
+      const empty = emptyPersistedData();
+      commit({ ...state, ...empty, ...derive(empty), storageStatus: state.storageStatus === 'memory_only' ? 'memory_only' : 'ok' });
+    },
 
     appendChat: (msg) => mutate((d) => ({ ...d, chat: [...d.chat, msg] })),
 

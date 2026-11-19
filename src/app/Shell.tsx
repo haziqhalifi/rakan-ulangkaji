@@ -6,7 +6,9 @@ import { ErrorBoundary } from './ErrorBoundary';
 import { LanguageToggle } from './LanguageToggle';
 import { NavigationProvider } from './NavigationContext';
 import { StatusBanner } from './StatusBanner';
-import { HomeScreen, SettingsScreen, WelcomeScreen } from './screens';
+import { Onboarding } from './Onboarding';
+import { SettingsScreen } from './SettingsScreen';
+import { HomeScreen } from './screens';
 import { guardRoute, navigateTo, routeHash, useRoute, type Route } from './router';
 
 // Exam and board load on demand. A failed load shows the "needs one online visit" panel.
@@ -32,7 +34,7 @@ export function Shell() {
   let screen: ReactNode;
   switch (route) {
     case 'welcome':
-      screen = <WelcomeScreen />;
+      screen = <Onboarding />;
       break;
     case 'rakan':
       screen = <ChatScreen />;

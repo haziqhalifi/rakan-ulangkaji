@@ -122,7 +122,19 @@ export function createStorageService(options: StorageOptions = {}): StorageServi
       }
     },
     async clearAll() {
-      await (await backend()).clearAll();
+      const active = await backend();
+      await active.clearAll();
+      // Also sweep localStorage, in case data was saved there before IndexedDB worked.
+      if (!options.backend && active.kind !== 'localstorage') {
+        const local = 'local' in options ? options.local : browserLocal();
+        if (local) {
+          try {
+            await createLocalBackend(local).clearAll();
+          } catch {
+            // best effort
+          }
+        }
+      }
     },
     async backendKind(): Promise<BackendKind> {
       return (await backend()).kind;

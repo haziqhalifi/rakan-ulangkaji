@@ -102,42 +102,42 @@ Wed 2 Dec and Thu 3 Dec are buffer for overruns and the manual checklist on a re
     - **Validates: Requirements 14.7**
     - _Requirements: 14.7_
 
-- [ ] 2. Onboarding, settings, export, import, and delete (~1 evening)
-  - [ ] 2.1 Implement profile validation and the onboarding flow
+- [x] 2. Onboarding, settings, export, import, and delete (~1 evening)
+  - [x] 2.1 Implement profile validation and the onboarding flow
     - Add `saveProfile` to the ProfileStore returning `Result<StudentProfile, ValidationError[]>` (name 1 to 30 chars after trim, form 4 or 5, at least one subject, language bm or en)
     - Build onboarding in at most 4 screens, including a "data stays in your browser" statement before submit, Matematik selectable and other subjects disabled with a "coming soon" label
     - On invalid input name each bad field and keep entered values. On storage failure stay on onboarding and show the try-again message
     - On success save the profile and open Rakan
     - _Requirements: 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9_
 
-  - [ ]* 2.2 Write property test for profile validation
+  - [x]* 2.2 Write property test for profile validation
     - **Property 1: Profile validation matches the field rules**
     - **Validates: Requirements 1.2, 1.4, 1.6**
     - _Requirements: 1.2, 1.4, 1.6_
 
-  - [ ] 2.3 Implement settings, export, import, and delete
+  - [x] 2.3 Implement settings, export, import, and delete
     - Create `exportImport.ts`, `exportData`, `importData` (shape and version guard, migrations, reject higher versions), and `deleteAll` (IndexedDB, localStorage prefix, consent flags, secret)
     - Build the Settings screen: language, edit profile, demo short timer toggle, export download with a "copy as text" fallback, import with validation, and delete with a confirm step that keeps data on cancel
     - Return to onboarding after a confirmed delete
     - Exclude API keys and in-progress exam state from the export
     - _Requirements: 1.6, 5.1, 5.12, 5.13, 5.14, 5.15, 5.16, 2.10, 20.4_
 
-  - [ ] 2.4 Write property test for export and import round trip
+  - [x] 2.4 Write property test for export and import round trip
     - **Property 10: Persistence and export round trip (export half)**
     - **Validates: Requirements 5.12, 5.16**
     - _Requirements: 5.12, 5.16, 2.10, 19.1_
 
-  - [ ] 2.5 Write property test that export never contains API keys
+  - [x] 2.5 Write property test that export never contains API keys
     - **Property 11: Export never contains API keys**
     - Also assert `deleteAll` leaves no stored key
     - **Validates: Requirements 5.7, 5.12, 5.14**
     - _Requirements: 5.7, 5.12, 5.14, 19.1_
 
-  - [ ]* 2.6 Write component tests for onboarding and settings
+  - [x]* 2.6 Write component tests for onboarding and settings
     - Cover the 4-screen limit, field errors with values kept, language toggle on onboarding, delete confirm and cancel
     - _Requirements: 1.4, 1.7, 5.13, 5.15, 14.1_
 
-  - [ ] 2.7 Checkpoint - Ensure all tests pass
+  - [x] 2.7 Checkpoint - Ensure all tests pass
     - Run `npm run lint`, `npm test`, and `npm run build`. Ensure all tests pass, ask the user if questions arise.
 
 - [ ] 3. Original Paper content and the Marker (~1 evening)

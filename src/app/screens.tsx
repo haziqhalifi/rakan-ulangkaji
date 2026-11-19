@@ -11,14 +11,6 @@ export function PlaceholderScreen(props: { titleKey: StringKey; bodyKey: StringK
   );
 }
 
-export function WelcomeScreen() {
-  return <PlaceholderScreen titleKey="welcome.title" bodyKey="welcome.body" />;
-}
-
-export function SettingsScreen() {
-  return <PlaceholderScreen titleKey="settings.title" bodyKey="settings.placeholder" />;
-}
-
 export function HomeScreen() {
   const { t } = useI18n();
   const { profile } = useProfileState();

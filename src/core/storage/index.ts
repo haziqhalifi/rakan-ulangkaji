@@ -14,3 +14,5 @@ export type {
   UnreadableReason,
   SecretName,
 } from './types';
+export { buildExport, parseImport, EXPORT_APP_ID } from './exportImport';
+export type { ExportBundle, ExportPayload, ImportError } from './exportImport';
