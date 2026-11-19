@@ -8,7 +8,7 @@ Deadline: Friday 4 December 2026 (aim for this date; the official Devpost deadli
 - [ ] Project text is in English. Reuse the README sections on the three parts, shared profile, privacy and zero cost.
 - [ ] Demo video of 3 minutes or less. Follow [`demo-script.md`](demo-script.md). Show it running offline with no key.
 - [ ] Public repository link. Check that `LICENSE` is present and no secrets are committed.
-- [ ] Live URL from the Cloudflare Pages deploy ([`deploy-cloudflare-pages.md`](deploy-cloudflare-pages.md)). Open it once in a private window.
+- [x] Live URL: https://haziqhalifi.github.io/rakan-ulangkaji/ (GitHub Pages, see [`deploy-github-pages.md`](deploy-github-pages.md); Cloudflare Pages remains an option via [`deploy-cloudflare-pages.md`](deploy-cloudflare-pages.md)). Open it once in a private window.
 - [ ] Screenshots of the three modes: Rakan chat, exam paper (or results), pathway board with the disclaimer visible.
 - [ ] Link to the Kiro usage write-up: [`kiro-usage.md`](kiro-usage.md). Mention steering, specs, hooks and property-based tests.
 - [ ] Say in the text that pathway hints are guidance only and the project is not endorsed by MOE, UPU or any institution.
