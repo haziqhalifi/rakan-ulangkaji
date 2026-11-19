@@ -1,0 +1,8 @@
+Implement task 3 from .kiro/specs/rakan-ulangkaji-mvp/tasks.md for Rakan Ulangkaji, following .kiro/steering and the spec (requirements.md, design.md). This is a non-interactive session; do not wait for approval.
+- Complete every required sub-task of task 3. Optional sub-tasks marked * : do them only if small; skip them if the task is getting large, and say which you skipped.
+- Earlier tasks (1 to 2) are already done; build on the existing code, do not rewrite it.
+- Hard rules: original Matematik questions only (never copied from MOE/Lembaga Peperiksaan papers); no em dashes (U+2014) anywhere in UI strings, content, docs or code comments; never use the BM pronoun "kau", use "awak" or "korang"; zero cost, no Vercel, no Supabase, no paid services; no new runtime dependencies unless essential and free.
+- Do NOT run git commands that push, create remotes, or commit (the operator commits). Do NOT deploy or run wrangler deploy. Do not install global packages.
+- Before finishing, run: npm run build, npm run lint, npm test, node scripts/copy-guard.mjs README.md docs src/content src/core/i18n (skip paths that do not exist). Fix everything until all pass.
+- Tick the completed checkboxes for task 3 in tasks.md and append a row for today to docs/kiro-usage-log.md (Kiro feature: spec task execution, task 3).
+- End with a short summary: what was built, tests added, optional sub-tasks skipped.

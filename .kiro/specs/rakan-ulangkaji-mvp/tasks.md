@@ -140,61 +140,61 @@ Wed 2 Dec and Thu 3 Dec are buffer for overruns and the manual checklist on a re
   - [x] 2.7 Checkpoint - Ensure all tests pass
     - Run `npm run lint`, `npm test`, and `npm run build`. Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 3. Original Paper content and the Marker (~1 evening)
-  - [ ] 3.1 Define content types and grade bands
+- [x] 3. Original Paper content and the Marker (~1 evening)
+  - [x] 3.1 Define content types and grade bands
     - Create `src/content/types.ts` (Question, SkemaPoint, Paper, Bilingual, `original: true` literal type) and `gradeBands.ts` (typed percentage to grade bands, illustrative)
     - _Requirements: 8.3, 10.7_
 
-  - [ ] 3.2 Author the original Matematik Paper and question bank
+  - [x] 3.2 Author the original Matematik Paper and question bank
     - Write 10 to 15 objective and 3 to 4 structured questions from scratch, covering at least 4 topic tags across Form 4 and Form 5, with fictional names and settings only
     - Give each question BM and EN text, marks, a skema (per-point `accepted` variants including decimal and fraction forms, `stripUnits` where needed), and a kind BM and EN explanation
     - Export the Paper from `matematik.paper.ts` (loaded lazily by Exam Mode) and share the question bank with Rakan quiz through a small bank module
     - Do not copy or closely paraphrase any past paper, trial paper, or book
     - _Requirements: 8.1, 8.2, 8.3, 8.4, 8.5, 8.9, 20.1_
 
-  - [ ] 3.3 Implement the Marker
+  - [x] 3.3 Implement the Marker
     - Create `features/exam/marker.ts` with `normalise`, `markQuestion`, `markPaper`, `gradeForPercent`, and `topicBreakdown`
     - Match per skema point, never award a point twice, let one answer segment satisfy at most one point, clamp marks to `[0, q.marks]`, and report unanswered questions
     - Keep it pure and synchronous, with no import of `core/ai`
     - _Requirements: 10.1, 10.2, 10.3, 10.4, 10.5, 10.6, 10.7, 10.11, 10.12, 10.15_
 
-  - [ ] 3.4 Write property test for shipped skema consistency
+  - [x] 3.4 Write property test for shipped skema consistency
     - **Property 41: Every shipped question has a consistent skema**
     - Include content-integrity checks: counts, topic coverage, `original: true`, fictional-name allow list, non-empty bilingual fields
     - **Validates: Requirements 8.3, 8.8, 8.9, 8.10, 19.5**
     - _Requirements: 8.1, 8.2, 8.3, 8.4, 8.8, 8.9, 8.10, 19.5_
 
-  - [ ] 3.5 Write property test for marker bounds and determinism
+  - [x] 3.5 Write property test for marker bounds and determinism
     - **Property 24: Marker bounds and determinism**
     - **Validates: Requirements 10.12, 10.14**
     - _Requirements: 10.12, 10.14, 19.1_
 
-  - [ ] 3.6 Write property test for case, spacing, and unit invariance
+  - [x] 3.6 Write property test for case, spacing, and unit invariance
     - **Property 25: Marker ignores case, spacing, and listed units**
     - **Validates: Requirements 10.2, 10.3, 10.13**
     - _Requirements: 10.2, 10.3, 10.13, 19.5_
 
-  - [ ] 3.7 Write property test for per-point awarding
+  - [x] 3.7 Write property test for per-point awarding
     - **Property 26: Marks are awarded per point and never twice**
     - **Validates: Requirements 10.3, 10.4, 10.5**
     - _Requirements: 10.3, 10.4, 10.5, 19.5_
 
-  - [ ] 3.8 Write property test for unanswered questions
+  - [x] 3.8 Write property test for unanswered questions
     - **Property 27: Unanswered questions score zero**
     - **Validates: Requirements 10.11**
     - _Requirements: 10.11, 19.1_
 
-  - [ ] 3.9 Write property test for exam totals and topic breakdown
+  - [x] 3.9 Write property test for exam totals and topic breakdown
     - **Property 28: Exam totals and topic breakdown are consistent**
     - **Validates: Requirements 10.5, 10.6, 10.7**
     - _Requirements: 10.5, 10.6, 10.7, 19.1_
 
-  - [ ] 3.10 Write property test for grade mapping
+  - [x] 3.10 Write property test for grade mapping
     - **Property 29: Grade mapping is total and monotone**
     - **Validates: Requirements 10.7**
     - _Requirements: 10.7, 19.1_
 
-  - [ ] 3.11 Write example tests for marker fixtures
+  - [x] 3.11 Write example tests for marker fixtures
     - Cover unit stripping, structured multi-point partial credit, one correct and one incorrect answer per skema point, and unanswered
     - _Requirements: 10.2, 10.3, 10.4, 10.11, 19.5_
 

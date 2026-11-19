@@ -35,3 +35,8 @@ Copy this block under a new date heading (for example `## Sun 22 Nov 2026`).
 | Kiro feature | Prompt summary | Outcome | Files touched |
 |---|---|---|---|
 | (steering, spec, hook, chat, and so on) | (one or two sentences) | (what worked, what needed a fix) | (paths) |
+## Thu 19 Nov 2026 (task 3)
+
+| Kiro feature | Prompt summary | Outcome | Files touched |
+|---|---|---|---|
+| Spec task execution (task 3) | Build content types and grade bands, an original Matematik Paper (12 objective, 4 structured) with a shared question bank, the deterministic Marker, and property and example tests for Properties 24 to 29 and 41 | Build, lint, tests and copy-guard pass | `src/content/*`, `src/features/exam/marker.ts`, `src/features/exam/*.test.ts`, `src/test/arbitraries/exam.ts` |
