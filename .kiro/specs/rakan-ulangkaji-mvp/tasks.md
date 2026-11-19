@@ -461,58 +461,58 @@ Wed 2 Dec and Thu 3 Dec are buffer for overruns and the manual checklist on a re
   - [x] 7.15 Checkpoint - Ensure all tests pass
     - Run `npm run lint`, `npm test`, and `npm run build`. Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 8. Optional remote AI: providers, fallback, Pages Function, consent UI (~1 evening)
-  - [ ] 8.1 Implement the payload builder, consent gate, and fallback
+- [x] 8. Optional remote AI: providers, fallback, Pages Function, consent UI (~1 evening)
+  - [x] 8.1 Implement the payload builder, consent gate, and fallback
     - Extend `generateReply.ts` and add `buildRemotePayload` (question at most 500 characters, language, at most one topic, share fields only when opted in, skip the call above 1.8 KB)
     - Gate order: consent recorded, provider enabled, `navigator.onLine`, and a rephrasable intent (`topic_help`, `greeting`, `unknown` only)
     - Abort at 8000 ms with `AbortController`. Any failure, 429, timeout, or empty body returns the rules reply silently. Quiz marks, nudges, pathway replies, and the Disclaimer are always rules output
     - _Requirements: 4.8, 4.9, 4.10, 4.11, 5.4, 5.5, 5.6, 5.8, 5.9, 15.7_
 
-  - [ ] 8.2 Implement the UserKey and Proxy providers
+  - [x] 8.2 Implement the UserKey and Proxy providers
     - Create `userKeyProvider.ts` (constant provider URLs for the supported free-tier providers, key read from `loadSecret`, sent only to the chosen provider) and `proxyProvider.ts` (`POST /api/chat`, body at most 2 KB)
     - Add no paid service and no new non-free dependency
     - _Requirements: 4.8, 4.9, 5.7, 18.4, 18.5_
 
-  - [ ] 8.3 Implement the Cloudflare Pages Function proxy
+  - [x] 8.3 Implement the Cloudflare Pages Function proxy
     - Create `functions/api/chat.ts`: reject non-POST, wrong content type, and bodies over 2048 bytes (413), validate a strict schema (`question` at most 500, `language`, optional `topic` at most 60), keep a fixed server-side system prompt, call the `AI` binding with a low `max_tokens`, map errors to 429 or 502, and never log request or response text
     - _Requirements: 5.9, 5.10, 18.5_
 
-  - [ ] 8.4 Build the remote AI settings and consent UI
+  - [x] 8.4 Build the remote AI settings and consent UI
     - In Settings, add provider toggles (all off by default), the plain-language consent notice listing exactly what is sent and the receiving provider, confirm and dismiss behaviour, API key entry, share opt-ins for name, school, and grades (off by default), revoke, and a neutral "remote helper not reachable" status line
     - Wire the chat screen to build `deps` from settings so the default path stays rules only
     - _Requirements: 5.1, 5.2, 5.3, 5.6, 5.7, 5.8, 4.7, 4.10_
 
-  - [ ] 8.5 Write property test for remote failure fallback
+  - [x] 8.5 Write property test for remote failure fallback
     - **Property 6: Remote failure falls back to the rules reply**
     - Use fake providers and a fake clock for rejection, timeout, 429, empty, and malformed bodies
     - **Validates: Requirements 4.10, 15.7, 19.4**
     - _Requirements: 4.10, 15.7, 19.1, 19.3, 19.4_
 
-  - [ ] 8.6 Write property test for no consent or offline
+  - [x] 8.6 Write property test for no consent or offline
     - **Property 7: No consent or offline means zero remote calls**
     - **Validates: Requirements 5.1, 5.4, 5.8, 15.7**
     - _Requirements: 5.1, 5.4, 5.8, 15.7, 19.1_
 
-  - [ ]* 8.7 Write property test for minimal remote payload
+  - [x]* 8.7 Write property test for minimal remote payload
     - **Property 8: Remote payload is minimal**
     - **Validates: Requirements 5.5, 5.6, 5.9**
     - _Requirements: 5.5, 5.6, 5.9_
 
-  - [ ]* 8.8 Write property test for proxy rejection
+  - [x]* 8.8 Write property test for proxy rejection
     - **Property 9: Proxy rejects oversized or malformed bodies**
     - Use a fake `AI` binding and a console spy
     - **Validates: Requirements 5.9**
     - _Requirements: 5.9, 5.10_
 
-  - [ ] 8.9 Write example tests for the fallback path
+  - [x] 8.9 Write example tests for the fallback path
     - Fake UserKey and Proxy providers: failure, timeout, 429, success, consent missing, offline. After each, the next chat message still works and the input stays enabled
     - _Requirements: 4.10, 5.4, 15.7, 19.1, 19.3, 19.4_
 
-  - [ ]* 8.10 Write component tests for the consent UI
+  - [x]* 8.10 Write component tests for the consent UI
     - Cover dismiss leaving the provider disabled, confirm recording consent, and revoke returning to rules only
     - _Requirements: 5.2, 5.3, 5.8_
 
-  - [ ] 8.11 Checkpoint - Ensure all tests pass
+  - [x] 8.11 Checkpoint - Ensure all tests pass
     - Run `npm run lint`, `npm test`, and `npm run build`. Ensure all tests pass, ask the user if questions arise.
 
 - [ ] 9. PWA, offline behaviour, and accessibility pass (~1 evening)

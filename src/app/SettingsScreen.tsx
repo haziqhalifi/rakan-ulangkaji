@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useState, useSyncExternalStore } from 'react';
+import { remoteStatus } from '../core/ai';
 import { useI18n, type StringKey } from '../core/i18n';
 import {
   useProfileState,
   useProfileStore,
   type Form,
   type Language,
+  type RemoteProviderId,
   type SubjectId,
   type ValidationError,
 } from '../core/profile';
@@ -22,6 +24,7 @@ export function SettingsScreen() {
       <h1 id="settings-title">{t('settings.title')}</h1>
       <ProfileSection />
       <PracticeSection />
+      <RemoteAiSection />
       <DataSection />
       <DeleteSection />
     </section>
@@ -251,6 +254,155 @@ function DeleteSection() {
           {t('settings.delete.failed')}
         </p>
       )}
+    </div>
+  );
+}
+
+function RemoteAiSection() {
+  const { t } = useI18n();
+  const store = useProfileStore();
+  const { settings } = useProfileState();
+  const unreachable = useSyncExternalStore(remoteStatus.subscribe, remoteStatus.get, remoteStatus.get);
+  const [pending, setPending] = useState<RemoteProviderId | null>(null);
+  const [key, setKey] = useState('');
+  const [keyNote, setKeyNote] = useState<StringKey | null>(null);
+
+  const vendor = settings.remote.userKey.provider;
+  const providerKey = (id: RemoteProviderId): StringKey =>
+    id === 'proxy' ? 'settings.remote.provider.proxy' : `settings.remote.provider.${vendor}`;
+
+  function toggle(id: RemoteProviderId, on: boolean) {
+    if (!on) {
+      store.setSettings({ remote: { [id]: { enabled: false } } });
+      setPending(null);
+    } else if (settings.remote[id].consentAt) {
+      store.setSettings({ remote: { [id]: { enabled: true } } });
+    } else {
+      setPending(id);
+    }
+  }
+
+  function confirm(id: RemoteProviderId) {
+    store.recordRemoteConsent(id);
+    store.setSettings({ remote: { [id]: { enabled: true } } });
+    setPending(null);
+  }
+
+  async function revoke(id: RemoteProviderId) {
+    store.revokeRemoteConsent(id);
+    setPending(null);
+    if (id === 'userKey') {
+      try {
+        await store.saveApiKey('');
+      } catch {
+        // The provider is already off. A leftover key is removed from Settings on the next try.
+      }
+      setKey('');
+    }
+  }
+
+  async function saveKey(value: string) {
+    try {
+      await store.saveApiKey(value);
+      setKeyNote(value.trim() === '' ? 'settings.remote.key.removed' : 'settings.remote.key.saved');
+      setKey('');
+    } catch {
+      setKeyNote('settings.remote.key.failed');
+    }
+  }
+
+  const ids: RemoteProviderId[] = ['proxy', 'userKey'];
+  return (
+    <div className="settings-block" aria-labelledby="settings-remote">
+      <h2 id="settings-remote">{t('settings.remote.title')}</h2>
+      <p className="field-hint">{t('settings.remote.intro')}</p>
+      {ids.map((id) => {
+        const s = settings.remote[id];
+        return (
+          <div key={id} className="field">
+            <label className="choice tap">
+              <input type="checkbox" checked={s.enabled && Boolean(s.consentAt)} onChange={(e) => toggle(id, e.target.checked)} />
+              {t(id === 'proxy' ? 'settings.remote.proxy.label' : 'settings.remote.userKey.label')}
+            </label>
+            <p role="status">{t(s.enabled && s.consentAt ? 'settings.remote.status.on' : 'settings.remote.status.off')}</p>
+            {pending === id && (
+              <div role="alertdialog" aria-labelledby={`consent-title-${id}`} className="confirm">
+                <h3 id={`consent-title-${id}`}>{t('settings.remote.consent.title')}</h3>
+                <p>{t('settings.remote.consent.intro')}</p>
+                <ul>
+                  <li>{t('settings.remote.consent.item.question')}</li>
+                  <li>{t('settings.remote.consent.item.language')}</li>
+                  <li>{t('settings.remote.consent.item.topic')}</li>
+                </ul>
+                <p>{t('settings.remote.consent.to', { provider: t(providerKey(id)) })}</p>
+                <p>{t('settings.remote.consent.none')}</p>
+                <div className="button-row">
+                  <button type="button" className="tap primary" onClick={() => confirm(id)}>
+                    {t('settings.remote.consent.confirm')}
+                  </button>
+                  <button type="button" className="tap" autoFocus onClick={() => setPending(null)}>
+                    {t('settings.remote.consent.dismiss')}
+                  </button>
+                </div>
+              </div>
+            )}
+            {s.consentAt && (
+              <button type="button" className="tap" onClick={() => void revoke(id)}>
+                {t('settings.remote.revoke')}
+              </button>
+            )}
+          </div>
+        );
+      })}
+
+      <fieldset className="field">
+        <legend>{t('settings.remote.vendor')}</legend>
+        {(['gemini', 'openrouter'] as const).map((v) => (
+          <label key={v} className="choice tap">
+            <input
+              type="radio"
+              name="remote-vendor"
+              checked={vendor === v}
+              onChange={() => {
+                store.setSettings({ remote: { userKey: { provider: v } } });
+                // A new provider needs its own consent and key.
+                if (settings.remote.userKey.consentAt) void revoke('userKey');
+              }}
+            />
+            {t(`settings.remote.vendor.${v}`)}
+          </label>
+        ))}
+      </fieldset>
+      <label className="field">
+        {t('settings.remote.key.label')}
+        <input type="password" autoComplete="off" value={key} onChange={(e) => setKey(e.target.value)} />
+      </label>
+      <p className="field-hint">{t('settings.remote.key.hint')}</p>
+      <div className="button-row">
+        <button type="button" className="tap" disabled={key.trim() === ''} onClick={() => void saveKey(key)}>
+          {t('settings.remote.key.save')}
+        </button>
+        <button type="button" className="tap" onClick={() => void saveKey('')}>
+          {t('settings.remote.key.remove')}
+        </button>
+      </div>
+      {keyNote && <p role="status">{t(keyNote)}</p>}
+
+      <fieldset className="field">
+        <legend>{t('settings.remote.share.title')}</legend>
+        {(['name', 'school', 'grades'] as const).map((k) => (
+          <label key={k} className="choice tap">
+            <input
+              type="checkbox"
+              checked={settings.share[k]}
+              onChange={(e) => store.setSettings({ share: { [k]: e.target.checked } })}
+            />
+            {t(`settings.remote.share.${k}`)}
+          </label>
+        ))}
+        <p className="field-hint">{t('settings.remote.share.hint')}</p>
+      </fieldset>
+      {unreachable && <p role="status">{t('settings.remote.unreachable')}</p>}
     </div>
   );
 }

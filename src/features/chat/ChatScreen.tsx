@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { topicLabel } from '../../content/questionBank';
 import { useNavigate } from '../../app/NavigationContext';
-import { generateReply } from '../../core/ai';
+import { createProxyProvider, createUserKeyProvider, generateReply, type GenerateDeps } from '../../core/ai';
 import { useI18n, type StringKey } from '../../core/i18n';
 import { pick } from '../../core/i18n';
-import { useProfileState, useProfileStore, type ChatMessage, type ChipId, type Language, type TopicId } from '../../core/profile';
+import { useProfileState, useProfileStore, type ChatMessage, type ChipId, type Language, type Settings, type TopicId } from '../../core/profile';
 import { CHAT_MAX_LENGTH, clampChatInput, validateChatInput } from './input';
 import { classifyIntent, findTopic } from './intents';
 import { hasNudgeBeenShown, markNudgeShown, nudgeMessage, nudgeTopicThisSession, pickNudgeTopic } from './nudge';
@@ -145,7 +145,8 @@ export function ChatScreen() {
         topic: findTopic(text),
         intent,
         ruleReply: rule,
-      });
+        shared: { name: current.profile?.name, grades: current.grades },
+      }, remoteDeps(current.settings));
       store.appendChat({
         id: nextId(),
         from: 'rakan',
@@ -160,6 +161,17 @@ export function ChatScreen() {
       setTyping((n) => n - 1);
     }
     return true;
+  }
+
+  /** Rules only unless the student turned a provider on and consented in Settings. */
+  function remoteDeps(settings: Settings): GenerateDeps {
+    return {
+      settings,
+      providers: {
+        userKey: createUserKeyProvider({ vendor: settings.remote.userKey.provider, getKey: () => store.loadApiKey() }),
+        proxy: createProxyProvider(),
+      },
+    };
   }
 
   function onSubmit(e: FormEvent) {

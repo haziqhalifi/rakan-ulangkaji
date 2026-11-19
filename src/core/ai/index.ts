@@ -1,4 +1,10 @@
 export * from './types';
 export { rulesProvider } from './rulesProvider';
-export { generateReply } from './generateReply';
+export { generateReply, REMOTE_TIMEOUT_MS } from './generateReply';
 export type { GenerateDeps } from './generateReply';
+export { buildRemotePayload, payloadBytes, REPHRASABLE_INTENTS, MAX_PAYLOAD_BYTES, PROXY_MAX_BYTES } from './payload';
+export type { RemotePayload, ShareOptIns } from './payload';
+export { createUserKeyProvider, VENDOR_URLS } from './userKeyProvider';
+export type { UserKeyVendor } from './userKeyProvider';
+export { createProxyProvider } from './proxyProvider';
+export { remoteStatus } from './status';

@@ -76,6 +76,10 @@ export interface ProfileStore {
   setSettings(patch: SettingsPatch): void;
   recordRemoteConsent(provider: RemoteProviderId): void;
   revokeRemoteConsent(provider: RemoteProviderId): void;
+  /** The user's own API key. Kept in browser storage only, never exported. */
+  loadApiKey(): Promise<string | null>;
+  /** An empty string removes the key. */
+  saveApiKey(key: string): Promise<void>;
   /** After an unreadable load, allow writes so new changes replace the old data. */
   startFresh(): void;
   /** Write pending changes now. Resolves when the write has finished or failed. */
@@ -352,6 +356,19 @@ export function createProfileStore(options: ProfileStoreOptions): ProfileStore {
         delete (remote[provider] as { consentAt?: string }).consentAt;
         return { ...d, settings: { ...d.settings, remote } };
       });
+    },
+
+    async loadApiKey() {
+      try {
+        const v = await storage.loadSecret('userKeyApiKey');
+        return v && v.trim() !== '' ? v : null;
+      } catch {
+        return null;
+      }
+    },
+
+    async saveApiKey(key) {
+      await storage.saveSecret('userKeyApiKey', key.trim());
     },
 
     startFresh() {

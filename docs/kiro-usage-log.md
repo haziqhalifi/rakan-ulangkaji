@@ -59,3 +59,9 @@ Copy this block under a new date heading (for example `## Sun 22 Nov 2026`).
 | Kiro feature | Prompt summary | Outcome | Files touched |
 |---|---|---|---|
 | Spec task execution (task 7) | Author hedged pathway rule data, build the eligibility engine, what-if helper, board UI with grade form, cards, detail panel and Disclaimer, with property tests for Properties 31 to 37 and example and component tests | Build, lint, tests and copy-guard pass. The optional single-flow integration test (7.14) was skipped to keep the task small. Suggestions are the cheapest set of changes found by a small search, and levels use grade-step distance so they stay monotone | `src/content/pathwayRules.ts`, `src/features/pathways/*`, `src/styles/board.css`, `src/test/arbitraries/grades.ts`, `src/core/i18n/strings.*.ts` |
+
+## Thu 19 Nov 2026 (task 8)
+
+| Kiro feature | Prompt summary | Outcome | Files touched |
+|---|---|---|---|
+| Spec task execution (task 8) | Add optional remote AI: payload builder, consent gate, 8 second timeout and silent rules fallback, UserKey and Proxy providers, Pages Function proxy, Settings consent UI, with property tests for Properties 6 to 9 and fallback example tests | Build, lint, tests and copy-guard pass. The default path stays rules only. Remote text is limited to topic help, greeting and unknown intents. All optional tests (8.7, 8.8, 8.10) were small, so they were done | `src/core/ai/*`, `functions/api/chat.ts`, `src/app/SettingsScreen.tsx`, `src/features/chat/ChatScreen.tsx`, `src/core/profile/ProfileStore.ts`, `src/core/i18n/strings.*.ts` |

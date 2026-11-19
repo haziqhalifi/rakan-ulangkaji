@@ -1,6 +1,6 @@
 // The AI layer contract. `Intent` lives here so that core never imports a feature.
 
-import type { ChipId, Language, ProviderId, TopicId } from '../profile/types';
+import type { ChipId, Grade_Set, Language, ProviderId, TopicId } from '../profile/types';
 
 export type { ProviderId };
 
@@ -45,6 +45,14 @@ export interface ReplyRequest {
   intent: Intent;
   /** The deterministic reply for the same input. Always computed first. */
   ruleReply: Reply;
+  /** Candidate personal items. Only sent when the student opted in (5.6). */
+  shared?: SharedItems;
+}
+
+export interface SharedItems {
+  name?: string;
+  school?: string;
+  grades?: Grade_Set;
 }
 
 export interface AIProvider {

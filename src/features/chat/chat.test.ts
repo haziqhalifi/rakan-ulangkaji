@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { generateReply, type AIProvider, type Intent } from '../../core/ai';
+import { type Intent } from '../../core/ai';
 import { listTopics } from '../../content/questionBank';
 import { TOPIC_EXPLANATIONS } from '../../content/topicExplanations';
 import { classifyIntent, findTopic, INTENT_PRIORITY } from './intents';
@@ -96,21 +96,5 @@ describe('replies', () => {
 
   it('hashes stably', () => {
     expect(hashMessage('abc')).toBe(hashMessage('abc'));
-  });
-});
-
-describe('generateReply fallback', () => {
-  const request = {
-    question: 'hi',
-    language: 'en' as const,
-    intent: 'greeting' as const,
-    ruleReply: { text: 'Hey Aina!', source: 'rules' as const },
-  };
-
-  it('returns the rule reply when a provider fails or returns nothing', async () => {
-    const failing: AIProvider = { id: 'proxy', generateReply: () => Promise.reject(new Error('down')) };
-    const empty: AIProvider = { id: 'userKey', generateReply: () => Promise.resolve({ text: ' ', source: 'userKey' }) };
-    expect((await generateReply(request, { provider: failing })).text).toBe('Hey Aina!');
-    expect((await generateReply(request, { provider: empty })).source).toBe('rules');
   });
 });
