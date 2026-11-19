@@ -1,0 +1,22 @@
+Write Kiroween 2026 Devpost submission material for Rakan Ulangkaji, following .kiro/steering, the spec, README.md, docs/kiro-usage.md, docs/kiro-usage-log.md, kiro-prompts/ and the actual code. Non-interactive session, do not wait for approval. Everything in English. Absolutely no em dashes (U+2014) or en dashes used as dashes, short paragraphs, no hype words, honest claims only (check each claim against the code; e.g. test count from npm test, number of questions from src/content).
+
+1. Create docs/devpost-submission.md with these sections:
+   - Project name: Rakan Ulangkaji
+   - Tagline (200 characters or fewer; state the count in an HTML comment)
+   - Category: Frankenstein, with a 2 to 3 sentence justification (a WhatsApp-style study-buddy chat, a formal timed SPM exam hall with skema marking, and a post-SPM pathway planner, three things that normally live in separate apps, stitched into one body by a shared on-device profile; rule engine plus optional LLM; works offline)
+   - Inspiration
+   - What it does
+   - How we built it (stack: Vite, React, TypeScript, Vitest, fast-check property tests, IndexedDB, service worker PWA, GitHub Pages via GitHub Actions, optional Cloudflare Pages Function with Workers AI free tier; zero cost)
+   - How we used Kiro: Kiro CLI 3.5.0 end to end in headless mode (--no-interactive, --trust-all-tools, --v3); steering docs (product, tech, copy-and-tone, content-integrity); spec mode (--mode spec, requirements-first, 20 EARS requirements, design with numbered correctness properties, 10-task plan); spec task execution one headless run per task with build/lint/test gates and a commit per task; hooks: copy-guard (blocks em dashes and the banned informal pronoun in copy), lint-on-save, test-on-save, spec-sync (Stop hook that ticks tasks.md and appends to the usage log, observed firing); deployment config and smoke-test bug fixes also done by Kiro; every prompt saved in kiro-prompts/ and a dated log in docs/kiro-usage-log.md; mention approximate Kiro credits used for the whole build (about 110). Point judges to the /.kiro folder.
+   - Challenges we ran into
+   - Accomplishments that we're proud of
+   - What we learned
+   - What's next
+   - Built with (comma-separated tags)
+   - Links: Repo https://github.com/haziqhalifi/rakan-ulangkaji , Live https://haziqhalifi.github.io/rakan-ulangkaji/ , Demo video: [YouTube link to be added]
+   - Disclosure: new project started and built on Nov 19 2026 during the Kiroween submission period; no prior code reused; all exam questions are original (not taken from MOE or Lembaga Peperiksaan papers); all demo students fictional; pathway hints are guidance only, not endorsed by MOE, UPU or any institution.
+   Written by the developer in first person plural or singular, consistent.
+
+2. Rewrite docs/demo-script.md into a demo script of 170 seconds or less, recorded on a phone (screen recording plus voice-over). English narration (judges), with optional short BM lines shown on screen only where the app is in BM (use "awak"/"korang", never the banned pronoun). Format: a table or numbered beats with timestamp range, what to tap on screen (exact button labels from src/core/i18n/strings.en.ts), and the narration line to read. Include: hook (first 10 s), onboarding (fast), Rakan chat + quiz, exam with the Settings "Demo short timer" option so the timer visibly runs out or submit, results with topic breakdown and option letters, Rakan nudging the weakest topic, pathway board with what-if grades and disclaimer, BM toggle, offline proof (open once, airplane mode, reload; note the app must be opened once before going offline), and a closing line on Kiro (spec, steering, hooks, /.kiro folder). Add a pre-recording checklist (clear site data, open once online, phone in Do Not Disturb, 1080p portrait) and a shot list. Keep total narration readable in time (about 2.3 words per second).
+
+3. Run node scripts/copy-guard.mjs README.md docs and npm test; fix issues. Do not git commit or push. Append a row for Thu 19 Nov 2026 to docs/kiro-usage-log.md (Kiro feature: submission writing). End with a short summary.

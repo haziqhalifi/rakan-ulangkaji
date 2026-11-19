@@ -98,3 +98,9 @@ Note: tasks 1 to 10 were all executed by Kiro CLI on Thu 19 Nov 2026 (about 18:0
 | Kiro feature | Prompt summary | Outcome | Files touched |
 |---|---|---|---|
 | Bug fix from smoke test | Singular and plural mark counts ("1 mark", "2 marks") through a small pluralisation helper, and name the correct option letter in the results breakdown for objective questions | Helper and option label added with unit and component tests. Build, lint, tests and copy-guard pass | `src/core/i18n/plural.ts`, `src/core/i18n/strings.*.ts`, `src/features/exam/{Runner,Results,ExamScreen}.tsx`, `src/features/exam/optionLabel.ts`, `src/features/chat/quiz.ts`, tests |
+
+## Thu 19 Nov 2026 (submission writing)
+
+| Kiro feature | Prompt summary | Outcome | Files touched |
+|---|---|---|---|
+| Submission writing | Write the Kiroween Devpost text and a demo script of 170 seconds or less, checking each claim against the code (test count, question count, hooks, spec size) | Devpost draft and timed demo script written. Copy-guard and tests pass. Demo video link is still a placeholder | `docs/devpost-submission.md`, `docs/demo-script.md`, `docs/kiro-usage-log.md`, `kiro-prompts/113-devpost-and-demo.txt` |
