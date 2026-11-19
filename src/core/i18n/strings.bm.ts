@@ -34,6 +34,8 @@ export const stringsBm: Record<StringKey, string> = {
   'chat.chip.quiz': 'Kuiz saya',
   'chat.chip.exam': 'Mula peperiksaan',
   'chat.chip.pathways': 'Lihat laluan saya',
+  'chat.chip.stop': 'Berhenti kuiz',
+  'chat.chip.quizTopic': 'Kuiz saya tentang ini',
   'chat.chip.revise': 'Apa patut saya ulang kaji?',
   'exam.title': 'Peperiksaan',
   'exam.placeholder': 'Kertas latihan sedang disiapkan. Ia akan dibuka di sini tidak lama lagi.',

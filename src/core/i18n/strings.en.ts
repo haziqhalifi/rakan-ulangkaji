@@ -32,6 +32,8 @@ export const stringsEn = {
   'chat.chip.quiz': 'Quiz me',
   'chat.chip.exam': 'Start exam',
   'chat.chip.pathways': 'See my pathways',
+  'chat.chip.stop': 'Stop quiz',
+  'chat.chip.quizTopic': 'Quiz me on this',
   'chat.chip.revise': 'What should I revise?',
   'exam.title': 'Exam',
   'exam.placeholder': 'The practice paper is getting ready. It will open here soon.',

@@ -1,10 +1,14 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { topicLabel } from '../../content/questionBank';
 import { useNavigate } from '../../app/NavigationContext';
 import { generateReply } from '../../core/ai';
 import { useI18n, type StringKey } from '../../core/i18n';
-import { useProfileState, useProfileStore, type ChatMessage, type Language } from '../../core/profile';
+import { pick } from '../../core/i18n';
+import { useProfileState, useProfileStore, type ChatMessage, type ChipId, type Language, type TopicId } from '../../core/profile';
 import { CHAT_MAX_LENGTH, clampChatInput, validateChatInput } from './input';
 import { classifyIntent, findTopic } from './intents';
+import { hasNudgeBeenShown, markNudgeShown, nudgeMessage, nudgeTopicThisSession, pickNudgeTopic } from './nudge';
+import { IDLE, isQuizActive, quizReducer, type QuizEvent, type QuizState } from './quiz';
 import { openingGreeting, ruleReply } from './replies';
 import '../../styles/chat.css';
 
@@ -14,15 +18,15 @@ function nextId(): string {
   return `m${Date.now().toString(36)}-${sequence}`;
 }
 
-const SEND_CHIPS: Array<{ id: 'quiz' | 'revise'; label: StringKey }> = [
-  { id: 'quiz', label: 'chat.chip.quiz' },
-  { id: 'revise', label: 'chat.chip.revise' },
-];
-
-const NAV_CHIPS: Array<{ route: 'exam' | 'board'; label: StringKey }> = [
-  { route: 'exam', label: 'chat.chip.exam' },
-  { route: 'board', label: 'chat.chip.pathways' },
-];
+/** Chips a Rakan message can carry that are not quiz topic buttons. */
+const CHIP_LABELS: Record<ChipId, StringKey> = {
+  quiz: 'chat.chip.quiz',
+  exam: 'chat.chip.exam',
+  pathways: 'chat.chip.pathways',
+  revise: 'chat.chip.revise',
+  stop: 'chat.chip.stop',
+  quizTopic: 'chat.chip.quizTopic',
+};
 
 export function ChatScreen() {
   const { t, lang, setLanguage } = useI18n();
@@ -31,6 +35,9 @@ export function ChatScreen() {
   const state = useProfileState();
   const [draft, setDraft] = useState('');
   const [typing, setTyping] = useState(0);
+  const [quiz, setQuizState] = useState<QuizState>(IDLE);
+  const quizRef = useRef<QuizState>(IDLE);
+  const [topicChoices, setTopicChoices] = useState<TopicId[]>([]);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const endRef = useRef<HTMLDivElement>(null);
   const name = state.profile?.name ?? '';
@@ -40,12 +47,86 @@ export function ChatScreen() {
     if (typeof endRef.current?.scrollIntoView === 'function') endRef.current.scrollIntoView({ block: 'end' });
   }, [messages.length, typing]);
 
+  // Rakan opens with at most one gentle nudge per app session. It reads the live weak list from
+  // the store when the screen opens, so a fresh exam result changes what Rakan says.
+  useEffect(() => {
+    if (hasNudgeBeenShown()) return;
+    const weak = pickNudgeTopic(store.getState().weakTopics);
+    if (!weak) return;
+    markNudgeShown(weak.topic);
+    const nudge = nudgeMessage(weak, lang);
+    store.appendChat({
+      id: nextId(),
+      from: 'rakan',
+      text: nudge.text,
+      lang,
+      at: new Date().toISOString(),
+      chips: nudge.chips,
+      source: 'rules',
+    });
+    // Runs once per mount on purpose. The session flag blocks any second nudge.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  function setQuiz(next: QuizState) {
+    quizRef.current = next;
+    setQuizState(next);
+  }
+
+  /** Run one quiz event: show the reply, record at most one attempt, keep the quiz state. */
+  function runQuiz(event: QuizEvent, language: Language) {
+    const out = quizReducer(quizRef.current, event, { language, weak: store.getState().weakTopics });
+    setQuiz(out.state);
+    setTopicChoices(out.topicChoices ?? []);
+    if (out.attempt) store.recordQuizAttempt(out.attempt);
+    if (out.text === '') return;
+    store.appendChat({
+      id: nextId(),
+      from: 'rakan',
+      text: out.text,
+      lang: language,
+      at: new Date().toISOString(),
+      chips: out.chips,
+      source: 'rules',
+    });
+  }
+
+  /** A topic button: show it as the student's message, then start the quiz on that topic. */
+  function startQuizOn(topic: TopicId, language: Language) {
+    store.appendChat({
+      id: nextId(),
+      from: 'student',
+      text: pick(topicLabel(topic), language),
+      lang: language,
+      at: new Date().toISOString(),
+    });
+    runQuiz({ type: 'chooseTopic', topic }, language);
+  }
+
+  function onChip(id: ChipId) {
+    if (id === 'exam') navigate('exam');
+    else if (id === 'pathways') navigate('board');
+    else if (id === 'stop') void send('stop', lang);
+    else if (id === 'quizTopic') {
+      const topic = nudgeTopicThisSession();
+      if (topic !== null) startQuizOn(topic, lang);
+    } else void send(t(CHIP_LABELS[id]), lang);
+  }
+
   /** Append the student message at once, then the Rakan reply. The input is never disabled. */
   async function send(raw: string, language: Language) {
     const checked = validateChatInput(raw);
     if (!checked.ok) return false;
     const text = checked.text;
     store.appendChat({ id: nextId(), from: 'student', text, lang: language, at: new Date().toISOString() });
+    if (isQuizActive(quizRef.current)) {
+      runQuiz({ type: 'answer', text }, language);
+      return true;
+    }
+    if (classifyIntent(text) === 'quiz_request') {
+      runQuiz({ type: 'request' }, language);
+      return true;
+    }
     const current = store.getState();
     const latest = current.progress.examResults[current.progress.examResults.length - 1];
     const intent = classifyIntent(text);
@@ -93,6 +174,13 @@ export function ChatScreen() {
     void send(draft, lang);
   }
 
+  // Chips: while a quiz runs only Stop. Otherwise the last Rakan message's chips, then the usual four.
+  const last = messages[messages.length - 1];
+  const messageChips: ChipId[] = last?.from === 'rakan' ? (last.chips ?? []) : [];
+  const chipIds: ChipId[] = isQuizActive(quiz)
+    ? ['stop']
+    : Array.from(new Set<ChipId>([...messageChips.filter((c) => c !== 'stop' && (c !== 'quizTopic' || nudgeTopicThisSession() !== null)), 'quiz', 'revise', 'exam', 'pathways']));
+
   function label(m: ChatMessage): string {
     return m.from === 'rakan' ? t('chat.label.rakan') : t('chat.label.you');
   }
@@ -128,14 +216,15 @@ export function ChatScreen() {
       </div>
 
       <div className="chat-chips" role="group" aria-label={t('chat.chips')}>
-        {SEND_CHIPS.map((c) => (
-          <button key={c.id} type="button" className="chip tap" onClick={() => void send(t(c.label), lang)}>
-            {t(c.label)}
-          </button>
-        ))}
-        {NAV_CHIPS.map((c) => (
-          <button key={c.route} type="button" className="chip tap" onClick={() => navigate(c.route)}>
-            {t(c.label)}
+        {quiz.phase === 'choosing_topic' &&
+          topicChoices.map((topic) => (
+            <button key={topic} type="button" className="chip tap" onClick={() => startQuizOn(topic, lang)}>
+              {pick(topicLabel(topic), lang)}
+            </button>
+          ))}
+        {chipIds.map((id) => (
+          <button key={id} type="button" className="chip tap" onClick={() => onChip(id)}>
+            {t(CHIP_LABELS[id])}
           </button>
         ))}
       </div>

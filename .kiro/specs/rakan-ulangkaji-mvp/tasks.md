@@ -330,55 +330,55 @@ Wed 2 Dec and Thu 3 Dec are buffer for overruns and the manual checklist on a re
     - Table of BM and EN phrases per intent, tie priority, 100-word limit on topic explanations, and BM wording ("awak" or "korang", no "kau")
     - _Requirements: 4.1, 4.5, 3.14_
 
-- [ ] 6. Quiz flow, weak topics, and nudges (~1 evening)
-  - [ ] 6.1 Write property test and examples for the Weak_Topic definition
+- [x] 6. Quiz flow, weak topics, and nudges (~1 evening)
+  - [x] 6.1 Write property test and examples for the Weak_Topic definition
     - **Property 14: Weak_Topic definition**
     - Include the boundary values 0.5 (not weak with 2 or more attempts) and 0.6 (not weak with fewer than 2 attempts)
     - **Validates: Requirements 2.3, 19.7**
     - _Requirements: 2.3, 19.7_
 
-  - [ ] 6.2 Implement the quiz state machine
+  - [x] 6.2 Implement the quiz state machine
     - Create `features/chat/quiz.ts` as a reducer with `idle`, `choosing_topic`, `asking`, and `done` phases
     - Offer the weakest Weak_Topic first, ask questions in fixed bank order skipping asked ones, end after 5 questions or when none remain, accept "stop" (trimmed, case-insensitive), keep the question open on a whitespace answer, and list topics that have questions when the chosen one has none
     - Mark with the same `markQuestion` as Exam Mode and record one attempt per marked answer through the store
     - Show points earned and missed, marks, and the explanation, with praise of at most 2 sentences on full marks and encouragement with no scolding otherwise
     - _Requirements: 2.4, 6.1, 6.2, 6.3, 6.4, 6.5, 6.6, 6.7, 6.8, 6.9, 6.10_
 
-  - [ ] 6.3 Implement nudges and revise advice
+  - [x] 6.3 Implement nudges and revise advice
     - Create `features/chat/nudge.ts` with `pickNudgeTopic` (lowest ratio, ties by topic name ascending) and a module-level once-per-session flag
     - Extend `replies.ts` so revise_advice lists up to 3 weak topics with percentages, and an empty weak list suggests "Start exam" and "Quiz me" chips
     - Offer a "Quiz me on this" chip on every nudge, and write nudge copy with no guilt, fear, or comparison wording
     - _Requirements: 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.7, 7.8_
 
-  - [ ] 6.4 Wire the quiz and nudge into the chat screen
+  - [x] 6.4 Wire the quiz and nudge into the chat screen
     - Connect quiz chips, the stop chip, and the "Quiz me on this" chip to the reducer
     - Show the nudge when Rakan opens, using weak topics read from the ProfileStore subscription so a fresh exam result changes what Rakan says
     - _Requirements: 6.1, 6.7, 7.1, 7.5, 7.7, 20.5_
 
-  - [ ]* 6.5 Write property test for weak-topic ordering and the nudge pick
+  - [x]* 6.5 Write property test for weak-topic ordering and the nudge pick
     - **Property 15: Weak topics are ordered and the nudge picks the first**
     - **Validates: Requirements 6.1, 7.1, 7.2, 7.3**
     - _Requirements: 6.1, 7.1, 7.2, 7.3_
 
-  - [ ]* 6.6 Write property test for quiz invariants
+  - [x]* 6.6 Write property test for quiz invariants
     - **Property 16: Quiz invariants**
     - **Validates: Requirements 2.4, 6.2, 6.6, 6.8**
     - _Requirements: 2.4, 6.2, 6.6, 6.8_
 
-  - [ ]* 6.7 Write property test for stop command matching
+  - [x]* 6.7 Write property test for stop command matching
     - **Property 17: Stop command matching**
     - **Validates: Requirements 6.7**
     - _Requirements: 6.7_
 
-  - [ ]* 6.8 Write example tests for quiz and nudge behaviour
+  - [x]* 6.8 Write example tests for quiz and nudge behaviour
     - Cover weakest topic offered first, ends after 5, stop, empty answer, no-questions topic, one nudge per session, tie by name, and chips present
     - _Requirements: 6.1, 6.6, 6.7, 6.8, 6.9, 7.1, 7.4, 7.5_
 
-  - [ ]* 6.9 Write tone and copy scan tests for chat strings
+  - [x]* 6.9 Write tone and copy scan tests for chat strings
     - Scan nudge, result, and quiz strings for guilt wording and the em dash character
     - _Requirements: 6.5, 7.6, 10.9, 14.11_
 
-  - [ ] 6.10 Checkpoint - Ensure all tests pass
+  - [x] 6.10 Checkpoint - Ensure all tests pass
     - Run `npm run lint`, `npm test`, and `npm run build`. Ensure all tests pass, ask the user if questions arise.
 
 - [ ] 7. Pathway rules, eligibility engine, and board (~1 evening)

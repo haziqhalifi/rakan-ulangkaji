@@ -42,12 +42,8 @@ const GREETING: Variants = [
 
 const QUIZ: Variants = [
   {
-    bm: 'Kuiz kecil sedang disiapkan. Sementara itu, sebut satu topik seperti indeks atau matriks dan saya terangkan, atau cuba kertas latihan.',
-    en: 'Short quizzes are on the way. For now, name a topic like indices or matrices and I will explain it, or try the practice paper.',
-  },
-  {
-    bm: 'Idea bagus, awak. Kuiz kecil belum sedia lagi. Awak boleh sebut satu topik untuk penerangan ringkas, atau mula kertas latihan.',
-    en: 'Good idea. Short quizzes are not ready yet. You can name a topic for a quick explanation, or start the practice paper.',
+    bm: 'Jom kuiz! Tekan Kuiz saya di bawah, pilih satu topik, dan kita mula satu soalan demi satu soalan.',
+    en: 'Let us quiz! Tap Quiz me below, pick a topic, and we go one question at a time.',
   },
 ];
 
@@ -73,16 +69,15 @@ const REVISE_NONE: Variants = [
   },
 ];
 
-const REVISE_WEAK: Variants = [
-  {
-    bm: 'Cadangan saya: tengok {topic} dahulu. Belum sampai lagi, tapi awak dah mula. Sebut nama topik itu dan saya terangkan.',
-    en: 'My suggestion: look at {topic} first. Not there yet, but you have started. Say the topic name and I will explain it.',
-  },
-  {
-    bm: 'Jom beri sedikit masa untuk {topic}. Sepuluh minit pun cukup. Sebut nama topik itu untuk penerangan ringkas.',
-    en: 'Let us give {topic} a little time. Ten minutes is enough. Say the topic name for a quick explanation.',
-  },
-];
+const REVISE_WEAK_HEAD: Bilingual = {
+  bm: 'Belum sampai lagi, tapi awak dah mula. Ini topik yang boleh awak tengok dahulu:',
+  en: 'Not there yet, but you have started. Here are topics to look at first:',
+};
+
+const REVISE_WEAK_TAIL: Bilingual = {
+  bm: 'Tekan "Kuiz saya" untuk berlatih, atau sebut nama topik untuk penerangan ringkas.',
+  en: 'Tap "Quiz me" to practise, or say a topic name for a quick explanation.',
+};
 
 const REVISE_STRONG: Variants = [
   {
@@ -163,9 +158,16 @@ export function ruleReply(intent: Intent, ctx: ReplyContext): Reply {
     case 'revise_advice': {
       const weak = ctx.weakTopics[0];
       if (weak) {
-        return { text: text(REVISE_WEAK, ctx, { topic: pick(topicLabel(weak.topic), lang) }), source: 'rules' };
+        const lines = ctx.weakTopics
+          .slice(0, 3)
+          .map((w, i) => `${i + 1}. ${pick(topicLabel(w.topic), lang)}: ${Math.round(w.ratio * 100)}%`);
+        return {
+          text: `${pick(REVISE_WEAK_HEAD, lang)}\n${lines.join('\n')}\n\n${pick(REVISE_WEAK_TAIL, lang)}`,
+          chips: ['quiz'],
+          source: 'rules',
+        };
       }
-      return { text: text(ctx.latestExam ? REVISE_STRONG : REVISE_NONE, ctx), source: 'rules' };
+      return { text: text(ctx.latestExam ? REVISE_STRONG : REVISE_NONE, ctx), chips: ['exam', 'quiz'], source: 'rules' };
     }
     case 'pathway_request':
       return { text: `${text(PATHWAY, ctx)}\n\n${getDisclaimer(lang)}`, source: 'rules' };

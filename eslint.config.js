@@ -33,6 +33,10 @@ function featureBoundaries() {
       rules: restrict([...crossFeature('exam'), ...AI_PATTERNS], `${crossMsg} ${aiMsg}`),
     },
     {
+      files: ['src/core/marking/marker.ts'],
+      rules: restrict(AI_PATTERNS, aiMsg),
+    },
+    {
       files: ['src/features/pathways/eligibility.ts'],
       rules: restrict([...crossFeature('pathways'), ...AI_PATTERNS], `${crossMsg} ${aiMsg}`),
     },
