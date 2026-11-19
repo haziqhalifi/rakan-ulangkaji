@@ -1,0 +1,17 @@
+Follow-up on the Rakan Ulangkaji project (steering in .kiro/steering, spec in .kiro/specs/rakan-ulangkaji-mvp). Do these, without running git push, creating remotes, deploying, or installing global packages:
+
+1. Update the target schedule table in .kiro/specs/rakan-ulangkaji-mvp/tasks.md (and any matching schedule in design.md): the developer is busy with other hackathons until Sat 21 Nov, so the 10 build evenings run Sun 22 Nov to Tue 1 Dec 2026, with Wed 2 Dec and Thu 3 Dec as buffer, and submission on Fri 4 Dec 2026 (official Devpost deadline Sat 5 Dec 2026 6:00 AM MYT). Keep everything else.
+
+2. Create useful Kiro CLI V3 hooks as JSON files in .kiro/hooks/ using the documented schema ({"version":"v1","hooks":[{name, description, trigger, matcher, action:{type, command|prompt}, timeout}]}):
+   - lint-on-save.json: PostFileSave on \.(ts|tsx)$ runs ESLint fix on the project (guard so it exits 0 quietly if node_modules is missing).
+   - test-on-save.json: PostFileSave on src/core/.*\.(ts|tsx)$ runs vitest related/run for marking, eligibility and storage tests (same guard).
+   - copy-guard.json: PostFileSave on files under src/content, src/core/i18n, docs, README.md: a command hook that fails with a clear message if the saved file contains an em dash (U+2014) or the banned BM pronoun listed in copy-and-tone.md as a standalone word (exclude .kiro/steering/copy-and-tone.md itself). Put the checking logic in a small Node script scripts/copy-guard.mjs that reads the hook JSON from STDIN to get the file path, and also accepts a path argument so it can run in CI or manually.
+   - spec-sync.json: an agent-type hook on Stop (task completion) that reminds the agent to tick off completed items in tasks.md and to append an entry to docs/kiro-usage-log.md.
+
+3. Minimal scaffold only (no feature code): package.json (name rakan-ulangkaji, private, type module, scripts dev/build/preview/test/lint/copy:check), vite.config.ts, tsconfig.json, index.html, src/main.tsx and src/App.tsx with a placeholder screen, eslint.config.js, .gitignore (node_modules, dist, .wrangler; MUST NOT ignore .kiro), public/_redirects for SPA fallback on Cloudflare Pages. Use current stable versions of vite, react, react-dom, typescript, vitest, eslint, typescript-eslint, @vitejs/plugin-react, fast-check. Then run npm install and npm run build and npm run lint to confirm the scaffold builds; fix any errors.
+
+4. Add LICENSE (MIT, copyright 2026 Haziq Halifi) and README.md skeleton in English: one-line pitch, the three stitched parts, Frankenstein category note, tech stack, zero-cost hosting, "How Kiro was used" section linking to .kiro/ and docs/kiro-usage-log.md, local dev commands, placeholders for live URL and demo video, disclaimer that questions are original and pathway info is guidance only. No em dashes.
+
+5. Create docs/kiro-usage-log.md: a dated log (Thu 19 Nov 2026) of Kiro features used so far: Kiro CLI 3.5.0 headless mode (--no-interactive, --trust-all-tools, --v3), steering docs generation, spec mode (--mode spec, requirements-first workflow with EARS requirements, design with correctness properties, tasks), hooks created, and this scaffold run. Leave a template for future entries (date, Kiro feature, prompt summary, outcome, files touched).
+
+6. Run node scripts/copy-guard.mjs over README.md and docs/ to prove it works. Report the results briefly.

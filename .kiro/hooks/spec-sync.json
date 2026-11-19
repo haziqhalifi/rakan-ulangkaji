@@ -1,0 +1,15 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "spec-sync",
+      "description": "When the agent finishes, remind it to tick completed tasks and log Kiro usage.",
+      "trigger": "Stop",
+      "action": {
+        "type": "agent",
+        "prompt": "Before ending: (1) If you completed any task or sub-task from .kiro/specs/rakan-ulangkaji-mvp/tasks.md, change its checkbox from [ ] to [x]. Do not tick anything that is not done and verified. (2) Append a short entry to docs/kiro-usage-log.md using the template at the end of that file: date, Kiro feature, prompt summary, outcome, files touched. Keep the entry in plain English with no em dashes. If nothing relevant changed, say so and stop."
+      },
+      "timeout": 60
+    }
+  ]
+}

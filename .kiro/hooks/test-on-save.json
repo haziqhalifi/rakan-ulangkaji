@@ -1,0 +1,16 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "test-on-save",
+      "description": "Run the marking, eligibility and storage tests once after a file in src/core is saved. Exits quietly if dependencies are not installed.",
+      "trigger": "PostFileSave",
+      "matcher": "src/core/.*\\.(ts|tsx)$",
+      "action": {
+        "type": "command",
+        "command": "[ -d node_modules ] || exit 0; npx --no-install vitest run --passWithNoTests marker eligibility storage"
+      },
+      "timeout": 90
+    }
+  ]
+}

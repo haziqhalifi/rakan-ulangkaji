@@ -1,0 +1,23 @@
+You are setting up a NEW hackathon project "Rakan Ulangkaji" for Kiroween 2026 (Devpost), Frankenstein category (stitch unlikely technologies together into one app). Work only inside the current directory. Do NOT run git push, do NOT create remotes, do NOT deploy, do NOT install global packages.
+
+Product: a bilingual Bahasa Melayu / English web app for Malaysian SPM students that stitches together three normally separate experiences:
+1. A WhatsApp-style study-buddy chat ("Rakan") that answers questions, quizzes the student, and nudges them.
+2. A formal SPM-style timed exam mode: original questions (never copied from official MOE/Lembaga Peperiksaan past papers), countdown timer, then marking against a skema (answer scheme) with explanations.
+3. A post-SPM "what if these grades?" pathway board: student enters predicted/actual grades and sees possible pathways (Matrikulasi, Asasi, STPM, Diploma, TVET, Foundation) with rule-based eligibility hints.
+The three parts share one student profile and progress so exam results feed the pathway board and the chat.
+
+Constraints:
+- Zero cost. No Vercel, no Supabase, no paid services. Static site hosted on Cloudflare Pages free tier. Storage in the browser (IndexedDB via a small wrapper, or localStorage).
+- AI: optional free-tier LLM call (user-supplied key or a Cloudflare Pages Function proxy using Workers AI free tier) with a deterministic rule-based fallback so the full demo works offline with no key.
+- Stack: Vite + React + TypeScript, Vitest for tests, ESLint, plain CSS or CSS modules (no heavy UI kit). PWA-friendly.
+- Brand-new code built after Oct 30 2026; no reuse of other repos.
+- Public materials in English; in-app copy bilingual BM/EN with a toggle.
+- Copy rules: address students as "awak" or "korang" in BM, NEVER "kau". No em dashes anywhere in public copy or UI strings. Short paragraphs. Friendly, encouraging older-sibling tone, not preachy. Never shame low grades.
+- Content rules: questions are original, aligned to KSSM topics but not copied. Pathway info is guidance only with a disclaimer to check official sources (e.g. UPU).
+
+Task for this step: create Kiro steering documents in .kiro/steering/ :
+- product.md (purpose, users, the three stitched parts, judging goals: impact, technical implementation, design, idea, presentation, MVP non-goals)
+- tech.md (stack, folder structure, commands, hosting on Cloudflare Pages, storage, AI provider abstraction with offline fallback, testing, zero-cost rules)
+- copy-and-tone.md (BM/EN tone and copy rules above, glossary of key BM/EN terms, examples of good and bad strings)
+- content-integrity.md (original questions only, skema format, pathway disclaimer, data privacy: no personal data leaves the browser by default)
+Use proper Kiro steering front matter (inclusion: always, or fileMatch where appropriate). Keep each file concise and practical. Do not write application code in this step.

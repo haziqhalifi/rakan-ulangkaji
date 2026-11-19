@@ -1,0 +1,16 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "copy-guard",
+      "description": "Fail if a saved copy file contains an em dash or the banned informal BM pronoun (see .kiro/steering/copy-and-tone.md).",
+      "trigger": "PostFileSave",
+      "matcher": "(^|/)(src/content/|src/core/i18n/|docs/|README\\.md$)",
+      "action": {
+        "type": "command",
+        "command": "node scripts/copy-guard.mjs"
+      },
+      "timeout": 15
+    }
+  ]
+}

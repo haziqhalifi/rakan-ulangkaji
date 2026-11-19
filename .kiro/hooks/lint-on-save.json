@@ -1,0 +1,16 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "lint-on-save",
+      "description": "Run ESLint with --fix on the project after a TypeScript file is saved. Exits quietly if dependencies are not installed.",
+      "trigger": "PostFileSave",
+      "matcher": "\\.(ts|tsx)$",
+      "action": {
+        "type": "command",
+        "command": "[ -d node_modules ] || exit 0; npx --no-install eslint --fix ."
+      },
+      "timeout": 60
+    }
+  ]
+}
