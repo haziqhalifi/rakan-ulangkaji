@@ -1,7 +1,7 @@
 // Content types for the Paper, questions and skema.
 // Content is typed data. Marking against it stays deterministic.
 
-import type { Bilingual, Form, Grade, Language, SubjectId, TopicId } from '../core/profile/types';
+import type { Bilingual, Form, Grade, Language, SpmSubject, SubjectId, TopicId } from '../core/profile/types';
 
 export type { Bilingual };
 export type QuestionId = string;
@@ -56,4 +56,32 @@ export interface GradeBand {
   /** Lowest percentage that earns this grade. */
   minPercent: number;
   grade: Grade;
+}
+
+// Pathway rules. Simplified, hedged data. Eligibility is decided by rule code only.
+export type PathwayId = 'matrikulasi' | 'asasi' | 'stpm' | 'diploma' | 'tvet' | 'foundation';
+export type ConditionStrength = 'core' | 'soft';
+
+export type Condition =
+  | { id: string; kind: 'minGrade'; subject: SpmSubject; grade: Grade; strength: ConditionStrength }
+  | {
+      id: string;
+      kind: 'minCount';
+      subjects: SpmSubject[] | 'any';
+      grade: Grade;
+      count: number;
+      strength: ConditionStrength;
+    };
+
+export interface PathwayRule {
+  pathway: PathwayId;
+  name: Bilingual;
+  /** Hedged wording shown in the detail panel. */
+  usuallyNeeds: Bilingual;
+  nextStep: Bilingual;
+  conditions: Condition[];
+  /** YYYY-MM-DD */
+  lastReviewed: string;
+  /** Non-empty. Says where the simplification came from. */
+  sourceNote: string;
 }

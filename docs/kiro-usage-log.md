@@ -53,3 +53,9 @@ Copy this block under a new date heading (for example `## Sun 22 Nov 2026`).
 |---|---|---|---|
 | Spec task execution (task 5) | Build the AI core interface and rules provider, intent engine, chat input validator, original topic explanations, reply templates and the Rakan chat screen, with property tests for Properties 2 to 5 and component tests | Build, lint, tests and copy-guard pass. All optional sub-tasks were small and done | `src/core/ai/*`, `src/features/chat/*`, `src/content/topicExplanations.ts`, `src/styles/chat.css`, `src/core/i18n/strings.*.ts` |
 | Spec task execution (task 6) | Build the Rakan quiz state machine, nudges, revise advice with percentages, and wire them into the chat screen, with property tests for Properties 14 to 17 | Build, lint, tests and copy-guard pass. All optional sub-tasks were small and done. The marker moved to `core/marking` (re-exported from `features/exam`) so chat and exam share it without a cross-feature import | `src/features/chat/{quiz,nudge,replies,ChatScreen}*`, `src/core/marking/marker.ts`, `src/core/profile/weakTopics.property.test.ts`, `eslint.config.js`, `src/core/i18n/strings.*.ts` |
+
+## Thu 19 Nov 2026 (task 7)
+
+| Kiro feature | Prompt summary | Outcome | Files touched |
+|---|---|---|---|
+| Spec task execution (task 7) | Author hedged pathway rule data, build the eligibility engine, what-if helper, board UI with grade form, cards, detail panel and Disclaimer, with property tests for Properties 31 to 37 and example and component tests | Build, lint, tests and copy-guard pass. The optional single-flow integration test (7.14) was skipped to keep the task small. Suggestions are the cheapest set of changes found by a small search, and levels use grade-step distance so they stay monotone | `src/content/pathwayRules.ts`, `src/features/pathways/*`, `src/styles/board.css`, `src/test/arbitraries/grades.ts`, `src/core/i18n/strings.*.ts` |

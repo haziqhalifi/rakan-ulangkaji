@@ -381,58 +381,58 @@ Wed 2 Dec and Thu 3 Dec are buffer for overruns and the manual checklist on a re
   - [x] 6.10 Checkpoint - Ensure all tests pass
     - Run `npm run lint`, `npm test`, and `npm run build`. Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 7. Pathway rules, eligibility engine, and board (~1 evening)
-  - [ ] 7.1 Author the pathway rule data
+- [x] 7. Pathway rules, eligibility engine, and board (~1 evening)
+  - [x] 7.1 Author the pathway rule data
     - Create `content/pathwayRules.ts` with simplified, hedged rules for Matrikulasi, Asasi, STPM, Diploma, TVET, and Foundation using `minGrade` and `minCount` conditions tagged `core` or `soft`
     - Give each rule `lastReviewed` (YYYY-MM-DD), a non-empty `sourceNote`, and BM and EN "usually needs" and next-step text
     - Show no official logos and imply no endorsement
     - _Requirements: 12.6, 12.7, 12.8, 20.1_
 
-  - [ ] 7.2 Implement the Eligibility_Engine
+  - [x] 7.2 Implement the Eligibility_Engine
     - Create `features/pathways/eligibility.ts` with `gradeRank`, `evaluatePathway`, `evaluateAll` (exactly six hints in fixed order), suggestions (smallest change to improve the level), `bestHint`, and `listOpenPathways`
     - Treat a missing subject as not met and name it in the reasons, keep levels monotone in grades, and make the engine total (an empty set returns six `check_closely` hints)
     - Use rule code only, with no `core/ai` import and no network
     - _Requirements: 12.1, 12.2, 12.3, 12.4, 12.5, 12.10, 12.11, 12.12, 12.13, 12.14_
 
-  - [ ] 7.3 Write property test for six well-formed hints
+  - [x] 7.3 Write property test for six well-formed hints
     - **Property 33: Eligibility returns six well-formed hints**
     - **Validates: Requirements 12.1, 12.2, 12.3, 12.4**
     - _Requirements: 12.1, 12.2, 12.3, 12.4, 19.1_
 
-  - [ ] 7.4 Write property test for eligibility determinism
+  - [x] 7.4 Write property test for eligibility determinism
     - **Property 34: Eligibility is deterministic**
     - **Validates: Requirements 12.5, 12.13**
     - _Requirements: 12.5, 12.13, 19.1_
 
-  - [ ] 7.5 Write property test for monotonicity in grades
+  - [x] 7.5 Write property test for monotonicity in grades
     - **Property 35: Eligibility is monotone in grades**
     - Use an `arbBetterGradeSet(base)` generator
     - **Validates: Requirements 12.14**
     - _Requirements: 12.14, 19.1_
 
-  - [ ] 7.6 Write property test for suggestions
+  - [x] 7.6 Write property test for suggestions
     - **Property 36: Suggestions improve or keep the level**
     - **Validates: Requirements 12.10**
     - _Requirements: 12.10, 19.1_
 
-  - [ ]* 7.7 Write property test for best hint and open pathway listing
+  - [x]* 7.7 Write property test for best hint and open pathway listing
     - **Property 37: Best hint and open pathway listing**
     - **Validates: Requirements 12.11, 12.12**
     - _Requirements: 12.11, 12.12_
 
-  - [ ] 7.8 Write example tests for pathways and rule data
+  - [x] 7.8 Write example tests for pathways and rule data
     - One fictional student per pathway (Matrikulasi, Asasi, STPM, Diploma, TVET, Foundation) checking level and reason, plus an empty set and a missing subject
     - Check every rule has a `lastReviewed` date in `YYYY-MM-DD` format and a non-empty `sourceNote`, and that all six pathways are present
     - _Requirements: 12.4, 12.6, 12.15, 19.8_
 
-  - [ ] 7.9 Build the board grade entry and what-if mode
+  - [x] 7.9 Build the board grade entry and what-if mode
     - Create `features/pathways/BoardScreen`, `GradeForm` (one `<select>` per subject for Bahasa Melayu, Bahasa Inggeris, Matematik, Sejarah, Sains with the 10 grades, 44 px targets), and a pure `whatIf.ts` state helper
     - What-if mode edits local predicted grades labelled "Predicted" and leaves the saved Grade_Set untouched. Turning it off discards them. With it off, edits call `setGrade` within 1 second
     - Add the import button (replaces only Matematik, kind message when no exam result exists) and the friendly empty-grades prompt with no hints
     - Create `board.css` and lazy-load rule data with the board chunk
     - _Requirements: 11.1, 11.2, 11.3, 11.4, 11.5, 11.6, 11.7, 11.8, 11.9, 11.10, 2.5_
 
-  - [ ] 7.10 Build pathway cards, detail panel, and the Disclaimer
+  - [x] 7.10 Build pathway cards, detail panel, and the Disclaimer
     - Render six cards in a CSS grid (usable at 360 px) with an icon and a text label per hint level, and a detail panel showing usual requirements, reason, `lastReviewed`, next step, and what would change the hint
     - Add the `Disclaimer` component (`getDisclaimer(lang)` with fallback), shown unabridged on the board, on every detail view, and in the empty state, in a sticky strip that stays visible at 360 x 640 after hints render
     - Switching language re-renders in place without changing grades or the open detail view
@@ -440,17 +440,17 @@ Wed 2 Dec and Thu 3 Dec are buffer for overruns and the manual checklist on a re
     - Use hedged wording only ("may be open", "usually needs")
     - _Requirements: 11.3, 12.7, 12.8, 12.9, 12.10, 12.11, 12.12, 13.1, 13.4, 13.5, 13.6, 17.4, 15.4_
 
-  - [ ]* 7.11 Write property test for grade import
+  - [x]* 7.11 Write property test for grade import
     - **Property 31: Grade import replaces only Matematik**
     - **Validates: Requirements 2.5, 11.4, 11.5**
     - _Requirements: 2.5, 11.4, 11.5_
 
-  - [ ]* 7.12 Write property test for what-if mode
+  - [x]* 7.12 Write property test for what-if mode
     - **Property 32: What-if mode never changes saved grades**
     - **Validates: Requirements 11.6, 11.7, 11.8**
     - _Requirements: 11.6, 11.7, 11.8_
 
-  - [ ]* 7.13 Write component tests for the board
+  - [x]* 7.13 Write component tests for the board
     - Cover Disclaimer on the board, the detail view, and the empty state, the what-if toggle, the import button, language switch in place, and forbidden phrases
     - _Requirements: 11.6, 11.9, 12.7, 13.1, 13.5_
 
@@ -458,7 +458,7 @@ Wed 2 Dec and Thu 3 Dec are buffer for overruns and the manual checklist on a re
     - Onboarding, a chat message, one quiz answer, the Paper with a fake clock and a canned answer set, the results screen, a Rakan nudge naming a weak topic, grade import, six hints and the Disclaimer, all with no network and no key
     - _Requirements: 20.3, 20.5, 2.5, 7.7_
 
-  - [ ] 7.15 Checkpoint - Ensure all tests pass
+  - [x] 7.15 Checkpoint - Ensure all tests pass
     - Run `npm run lint`, `npm test`, and `npm run build`. Ensure all tests pass, ask the user if questions arise.
 
 - [ ] 8. Optional remote AI: providers, fallback, Pages Function, consent UI (~1 evening)
