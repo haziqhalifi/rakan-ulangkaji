@@ -104,3 +104,9 @@ Note: tasks 1 to 10 were all executed by Kiro CLI on Thu 19 Nov 2026 (about 18:0
 | Kiro feature | Prompt summary | Outcome | Files touched |
 |---|---|---|---|
 | Submission writing | Write the Kiroween Devpost text and a demo script of 170 seconds or less, checking each claim against the code (test count, question count, hooks, spec size) | Devpost draft and timed demo script written. Copy-guard and tests pass. Demo video link is still a placeholder | `docs/devpost-submission.md`, `docs/demo-script.md`, `docs/kiro-usage-log.md`, `kiro-prompts/113-devpost-and-demo.txt` |
+
+## Fri 20 Nov 2026 (submission writing)
+
+| Kiro feature | Prompt summary | Outcome | Files touched |
+|---|---|---|---|
+| Submission writing | Replace the demo video placeholders with the live unlisted YouTube link in the README and the Devpost text | Both links updated. Copy-guard and tests pass | `README.md`, `docs/devpost-submission.md`, `docs/kiro-usage-log.md` |

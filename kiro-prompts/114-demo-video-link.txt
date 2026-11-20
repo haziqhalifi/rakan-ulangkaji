@@ -1,0 +1,15 @@
+Update the demo video links for Rakan Ulangkaji. This is a non-interactive session; do not wait for approval. Everything in English. Absolutely no em dashes (U+2014) or en dashes used as dashes.
+
+The YouTube demo is now live (Unlisted): https://youtu.be/COlHKoUSwy0
+
+1. In README.md, in the Links section, replace the placeholder "Demo video: _coming soon_" with the real URL. Keep it as a list item near the live/repo links. Do not invent a repo line if one is not already there. Example form: "- Demo video: https://youtu.be/COlHKoUSwy0"
+
+2. In docs/devpost-submission.md, in the Links section, replace "Demo video: [YouTube link to be added]" with the same URL in the same list style as the Repo and Live lines.
+
+3. Do not change any other wording, claims, or sections unless a leftover "coming soon" or "to be added" demo-video placeholder would be inconsistent. Do not add em dashes. Do not change code.
+
+4. Run node scripts/copy-guard.mjs README.md docs and npm test. Fix only issues you introduce.
+
+5. Do NOT run git commands that commit, push, create remotes, or change history. The operator will commit and push.
+
+6. Append a row for Fri 20 Nov 2026 to docs/kiro-usage-log.md (Kiro feature: submission writing / demo video link). End with a short summary of the two files changed.

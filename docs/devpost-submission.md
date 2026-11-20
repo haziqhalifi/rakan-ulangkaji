@@ -110,7 +110,7 @@ Kiro, Kiro CLI, Vite, React, TypeScript, Vitest, fast-check, Testing Library, ES
 
 - Repo: https://github.com/haziqhalifi/rakan-ulangkaji
 - Live: https://haziqhalifi.github.io/rakan-ulangkaji/
-- Demo video: [YouTube link to be added]
+- Demo video: https://youtu.be/COlHKoUSwy0
 
 ## Disclosure
 

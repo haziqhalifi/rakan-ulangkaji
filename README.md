@@ -72,7 +72,7 @@ npm run copy:check   # check copy for em dashes and banned words
 ## Links
 
 - Live URL: https://haziqhalifi.github.io/rakan-ulangkaji/ (GitHub Pages, deployed by `.github/workflows/pages.yml`)
-- Demo video: _coming soon_
+- Demo video: https://youtu.be/COlHKoUSwy0
 
 ## Disclaimers
 
